@@ -7,6 +7,7 @@ import { Shell } from "@/components/safari/Shell";
 import { MaasaiDivider } from "@/components/safari/MaasaiDivider";
 import { sightings, images } from "@/lib/safari-data";
 import { getSpeciesFact } from "@/lib/wis.functions";
+import { WildIntelModules } from "@/components/safari/WildIntelModules";
 
 export const Route = createFileRoute("/wildlife")({
   head: () => ({
@@ -108,6 +109,9 @@ function WildlifePage() {
             </button>
           ))}
         </div>
+
+        <WildIntelModules />
+
 
         <div className="grid lg:grid-cols-[1fr_400px] gap-6">
           {/* timeline */}

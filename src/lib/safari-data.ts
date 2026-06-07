@@ -1,17 +1,20 @@
 // Mocked in-memory data layer for SAFARI.
 // Easily swappable for live API hooks later.
 
-// NOTE: original asset filenames did not match their visual content.
-// Imports below are remapped to files whose actual content matches the label.
-import lionImg from "@/assets/zebra.jpg"; // file actually contains a lion
-import elephantsImg from "@/assets/lion-hero.jpg"; // file actually contains elephants at sunset
-import cheetahImg from "@/assets/savanna.jpg"; // file actually contains a cheetah
+// Wildlife imagery — uploaded reference photos matched to species.
+import lionImg from "@/assets/wild-lion-bird.jpg";
+import lionsRockImg from "@/assets/wild-lions-rock.jpg";
+import elephantsImg from "@/assets/wild-elephant-kili.jpg";
+import elephantSunsetImg from "@/assets/wild-elephant-sunset.jpg";
+import cheetahImg from "@/assets/wild-cheetah-portrait.jpg";
+import cheetahFamilyImg from "@/assets/wild-cheetah-family.jpg";
 import zebraImg from "@/assets/elephants.jpg"; // file actually contains a zebra
 import buffaloImg from "@/assets/cheetah.jpg"; // file actually contains a buffalo
 import giraffeImg from "@/assets/giraffe-real.jpg";
 import gorillaImg from "@/assets/gorilla-real.jpg";
 import coastImg from "@/assets/coast.jpg";
-import savannaImg from "@/assets/lion-hero.jpg"; // savanna sunset scene
+import savannaImg from "@/assets/wild-elephant-sunset.jpg";
+
 
 export const images = {
   lion: lionImg,
@@ -161,7 +164,7 @@ export const sightings: Sighting[] = [
       "Coalition of 3 male cheetahs spotted stalking a Thomson's gazelle herd. Wind direction favorable. AI predicts hunt attempt within 40 minutes — 78% success probability based on terrain.",
     confidence: 92,
     timestamp: "07:48 EAT",
-    image: cheetahImg,
+    image: cheetahFamilyImg,
   },
   {
     id: "s-003",
@@ -189,7 +192,7 @@ export const sightings: Sighting[] = [
       "Marsh Pride — 2 lionesses and 4 cubs resting near a fresh wildebeest kill. Cubs estimated 4 months old. Vultures circling indicates kill is hours old, lions will remain another 2-3hrs.",
     confidence: 98,
     timestamp: "06:55 EAT",
-    image: lionImg,
+    image: lionsRockImg,
   },
   {
     id: "s-005",
