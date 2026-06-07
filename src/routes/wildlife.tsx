@@ -110,6 +110,9 @@ function WildlifePage() {
           ))}
         </div>
 
+        <WildIntelModules />
+
+
         <div className="grid lg:grid-cols-[1fr_400px] gap-6">
           {/* timeline */}
           <div className="space-y-4">
