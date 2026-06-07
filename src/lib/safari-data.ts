@@ -1,15 +1,17 @@
 // Mocked in-memory data layer for SAFARI.
 // Easily swappable for live API hooks later.
 
-import lionImg from "@/assets/lion-hero.jpg";
-import elephantsImg from "@/assets/elephants.jpg";
-import cheetahImg from "@/assets/cheetah.jpg";
-import zebraImg from "@/assets/zebra.jpg";
-import buffaloImg from "@/assets/buffalo.jpg";
-import giraffeImg from "@/assets/giraffe.jpg";
-import gorillaImg from "@/assets/gorilla.jpg";
+// NOTE: original asset filenames did not match their visual content.
+// Imports below are remapped to files whose actual content matches the label.
+import lionImg from "@/assets/zebra.jpg"; // file actually contains a lion
+import elephantsImg from "@/assets/lion-hero.jpg"; // file actually contains elephants at sunset
+import cheetahImg from "@/assets/savanna.jpg"; // file actually contains a cheetah
+import zebraImg from "@/assets/elephants.jpg"; // file actually contains a zebra
+import buffaloImg from "@/assets/cheetah.jpg"; // file actually contains a buffalo
+import giraffeImg from "@/assets/giraffe-real.jpg";
+import gorillaImg from "@/assets/gorilla-real.jpg";
 import coastImg from "@/assets/coast.jpg";
-import savannaImg from "@/assets/savanna.jpg";
+import savannaImg from "@/assets/lion-hero.jpg"; // savanna sunset scene
 
 export const images = {
   lion: lionImg,
