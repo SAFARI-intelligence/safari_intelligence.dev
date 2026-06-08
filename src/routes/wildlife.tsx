@@ -129,8 +129,13 @@ function WildlifePage() {
                     : "hover:shadow-[var(--shadow-elevated)]"
                 }`}
               >
-                <div className="relative h-32 sm:h-auto overflow-hidden">
-                  <img src={s.image} alt={s.species} className="h-full w-full object-cover" />
+                <div className="relative h-44 sm:h-full sm:min-h-44 overflow-hidden">
+                  <img
+                    src={s.image}
+                    alt={s.species}
+                    loading="lazy"
+                    className="absolute inset-0 h-full w-full object-cover object-center"
+                  />
                   <div className="absolute top-2 left-2 px-2 py-0.5 rounded-full bg-black/55 backdrop-blur-sm text-white text-[10px] font-medium">
                     {s.confidence}% conf
                   </div>
