@@ -113,9 +113,9 @@ function WildlifePage() {
         <WildIntelModules />
 
 
-        <div className="grid lg:grid-cols-[1fr_400px] gap-6">
+        <div className="grid lg:grid-cols-[1fr_400px] gap-6 min-w-0">
           {/* timeline */}
-          <div className="space-y-4">
+          <div className="space-y-4 min-w-0">
             {filtered.map((s, i) => (
               <motion.article
                 key={s.id}
