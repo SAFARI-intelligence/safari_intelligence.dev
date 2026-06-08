@@ -82,8 +82,8 @@ function Index() {
                 </span>
               </h1>
               <p className="mt-5 text-base sm:text-lg text-white/85 max-w-xl">
-                Karibu SAFARI — the operating system for East African tourism. AI tracks{" "}
-                <strong className="text-[var(--gold)]">{totalSightings} active sightings</strong>{" "}
+                Karibu SAFARI — East Africa's intelligent tourism platform. AI tracks{" "}
+                <strong className="text-[var(--gold)]">{totalSightings} active wildlife sightings</strong>{" "}
                 across {parks.length} parks right now. Twende!
               </p>
               <div className="mt-8 flex flex-wrap gap-3">
