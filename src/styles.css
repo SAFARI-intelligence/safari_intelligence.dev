@@ -47,6 +47,9 @@
   --color-maasai-foreground: var(--maasai-foreground);
   --color-forest: var(--forest);
   --color-forest-foreground: var(--forest-foreground);
+  --color-emerald: var(--emerald);
+  --color-emerald-foreground: var(--emerald-foreground);
+  --color-ivory: var(--ivory);
   --color-savanna: var(--savanna);
   --color-charcoal: var(--charcoal);
 
@@ -126,24 +129,45 @@
   --sidebar-border: oklch(0.85 0.03 70 / 0.6);
   --sidebar-ring: oklch(0.68 0.13 75);
 
-  --gradient-savanna: linear-gradient(
-    135deg,
-    oklch(0.985 0.012 85) 0%,
-    oklch(0.94 0.05 75) 50%,
-    oklch(0.92 0.07 70) 100%
-  );
-  --gradient-gold: linear-gradient(135deg, oklch(0.78 0.14 80), oklch(0.6 0.14 60));
+  /* Emerald luxury accent */
+  --emerald: oklch(0.52 0.13 165);
+  --emerald-foreground: oklch(0.99 0.01 85);
+  --ivory: oklch(0.985 0.015 85);
+
+  --gradient-savanna: radial-gradient(
+      ellipse 70% 50% at 15% 0%,
+      oklch(0.96 0.04 80 / 0.8) 0%,
+      transparent 60%
+    ),
+    radial-gradient(
+      ellipse 60% 45% at 95% 100%,
+      oklch(0.92 0.07 70 / 0.5) 0%,
+      transparent 55%
+    ),
+    linear-gradient(
+      160deg,
+      oklch(0.985 0.012 85) 0%,
+      oklch(0.96 0.03 78) 60%,
+      oklch(0.94 0.05 72) 100%
+    );
+  --gradient-gold: linear-gradient(135deg, oklch(0.82 0.14 82), oklch(0.6 0.14 58));
   --gradient-sunset: linear-gradient(
     135deg,
     oklch(0.68 0.13 75) 0%,
     oklch(0.58 0.18 40) 50%,
     oklch(0.52 0.21 22) 100%
   );
+  --gradient-emerald: linear-gradient(135deg, oklch(0.62 0.14 165), oklch(0.42 0.12 170));
 
-  --shadow-glass: 0 8px 32px -8px oklch(0.3 0.05 60 / 0.18),
-    0 1px 0 0 oklch(1 0 0 / 0.6) inset;
-  --shadow-elevated: 0 20px 50px -20px oklch(0.3 0.05 60 / 0.35);
-  --shadow-glow-gold: 0 0 40px -10px oklch(0.68 0.13 75 / 0.55);
+  --shadow-glass: 0 1px 0 0 oklch(1 0 0 / 0.7) inset,
+    0 8px 24px -10px oklch(0.3 0.05 60 / 0.14),
+    0 2px 6px -2px oklch(0.3 0.05 60 / 0.08);
+  --shadow-elevated: 0 1px 0 0 oklch(1 0 0 / 0.75) inset,
+    0 24px 60px -24px oklch(0.3 0.05 60 / 0.32),
+    0 8px 20px -8px oklch(0.3 0.05 60 / 0.12);
+  --shadow-glow-gold: 0 0 50px -12px oklch(0.68 0.13 75 / 0.45);
+  --shadow-glow-emerald: 0 0 50px -12px oklch(0.52 0.13 165 / 0.35);
+  --ease-out-quint: cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 /* Cool glossy premium dark — obsidian + cobalt with warm gold accents */
@@ -168,6 +192,10 @@
 
   --forest: oklch(0.68 0.16 158);
   --forest-foreground: oklch(0.14 0.018 260);
+
+  --emerald: oklch(0.7 0.14 165);
+  --emerald-foreground: oklch(0.14 0.018 260);
+  --ivory: oklch(0.97 0.008 90);
 
   --savanna: oklch(0.24 0.03 255);
   --charcoal: oklch(0.08 0.015 260);
@@ -276,7 +304,6 @@
   .glass {
     background: color-mix(in oklab, var(--background) 55%, transparent);
     backdrop-filter: blur(20px) saturate(140%);
-    -webkit-backdrop-filter: blur(20px) saturate(140%);
     border: 1px solid color-mix(in oklab, var(--foreground) 8%, transparent);
     box-shadow: var(--shadow-glass);
   }
@@ -284,9 +311,60 @@
   .glass-strong {
     background: color-mix(in oklab, var(--background) 78%, transparent);
     backdrop-filter: blur(28px) saturate(160%);
-    -webkit-backdrop-filter: blur(28px) saturate(160%);
     border: 1px solid color-mix(in oklab, var(--foreground) 10%, transparent);
     box-shadow: var(--shadow-elevated);
+  }
+
+  /* Premium card — refined depth, hairline border, subtle hover lift */
+  .premium-card {
+    position: relative;
+    background: color-mix(in oklab, var(--card) 92%, transparent);
+    backdrop-filter: blur(16px) saturate(140%);
+    border: 1px solid color-mix(in oklab, var(--foreground) 7%, transparent);
+    border-radius: var(--radius-xl);
+    box-shadow: var(--shadow-glass);
+    transition: transform 360ms var(--ease-out-quint),
+      box-shadow 360ms var(--ease-out-quint),
+      border-color 360ms var(--ease-out-quint);
+  }
+  .premium-card:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-elevated);
+    border-color: color-mix(in oklab, var(--gold) 35%, transparent);
+  }
+
+  /* Hairline gold separator */
+  .hairline-gold {
+    height: 1px;
+    background: linear-gradient(
+      90deg,
+      transparent,
+      color-mix(in oklab, var(--gold) 60%, transparent),
+      transparent
+    );
+  }
+
+  /* Shimmer for premium CTAs */
+  .shimmer {
+    position: relative;
+    overflow: hidden;
+  }
+  .shimmer::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      110deg,
+      transparent 30%,
+      oklch(1 0 0 / 0.18) 50%,
+      transparent 70%
+    );
+    transform: translateX(-100%);
+    transition: transform 900ms var(--ease-out-quint);
+    pointer-events: none;
+  }
+  .shimmer:hover::before {
+    transform: translateX(100%);
   }
 
   .maasai-pattern {
@@ -323,6 +401,52 @@
       transform: scale(1.4);
       opacity: 0;
     }
+  }
+
+  /* Refined text */
+  .text-balance { text-wrap: balance; }
+  .text-pretty { text-wrap: pretty; }
+
+  /* Tabular numerals for data displays */
+  .tabular { font-variant-numeric: tabular-nums; }
+}
+
+/* Smooth global transitions on interactive elements */
+@layer base {
+  a, button, [role="button"] {
+    transition: color 200ms var(--ease-out-quint),
+      background-color 200ms var(--ease-out-quint),
+      border-color 200ms var(--ease-out-quint),
+      box-shadow 240ms var(--ease-out-quint),
+      transform 240ms var(--ease-out-quint);
+  }
+
+  /* Refined focus rings */
+  :focus-visible {
+    outline: 2px solid color-mix(in oklab, var(--gold) 70%, transparent);
+    outline-offset: 2px;
+    border-radius: 4px;
+  }
+
+  /* Premium scrollbar */
+  ::-webkit-scrollbar { width: 10px; height: 10px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+  ::-webkit-scrollbar-thumb {
+    background: color-mix(in oklab, var(--foreground) 15%, transparent);
+    border-radius: 999px;
+    border: 2px solid transparent;
+    background-clip: padding-box;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: color-mix(in oklab, var(--gold) 50%, transparent);
+    background-clip: padding-box;
+    border: 2px solid transparent;
+  }
+
+  /* Refined selection */
+  ::selection {
+    background: color-mix(in oklab, var(--gold) 35%, transparent);
+    color: var(--foreground);
   }
 }
 
