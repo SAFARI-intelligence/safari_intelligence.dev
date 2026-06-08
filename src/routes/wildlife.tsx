@@ -113,9 +113,9 @@ function WildlifePage() {
         <WildIntelModules />
 
 
-        <div className="grid lg:grid-cols-[1fr_400px] gap-6">
+        <div className="grid lg:grid-cols-[1fr_400px] gap-6 min-w-0">
           {/* timeline */}
-          <div className="space-y-4">
+          <div className="space-y-4 min-w-0">
             {filtered.map((s, i) => (
               <motion.article
                 key={s.id}
@@ -123,32 +123,31 @@ function WildlifePage() {
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ delay: i * 0.05 }}
                 onClick={() => setSelected(s)}
-                className={`glass rounded-2xl overflow-hidden grid sm:grid-cols-[180px_1fr] cursor-pointer transition ${
+                className={`glass rounded-2xl overflow-hidden grid sm:grid-cols-[180px_1fr] cursor-pointer transition w-full min-w-0 ${
                   selected.id === s.id
                     ? "ring-2 ring-[var(--gold)]"
                     : "hover:shadow-[var(--shadow-elevated)]"
                 }`}
               >
-                <div className="relative h-40 sm:h-auto">
+                <div className="relative h-32 sm:h-auto overflow-hidden">
                   <img src={s.image} alt={s.species} className="h-full w-full object-cover" />
                   <div className="absolute top-2 left-2 px-2 py-0.5 rounded-full bg-black/55 backdrop-blur-sm text-white text-[10px] font-medium">
                     {s.confidence}% conf
                   </div>
                 </div>
-                <div className="p-4 sm:p-5 space-y-2.5">
-                  <div className="flex items-center gap-2 text-[11px] text-muted-foreground">
-                    <Clock className="h-3 w-3" /> {s.timestamp}
-                    <span>·</span>
-                    <MapPin className="h-3 w-3" /> {s.park}
-                    <span className="ml-auto px-2 py-0.5 rounded-full bg-[var(--forest)]/12 text-[var(--forest)] font-semibold">
+                <div className="p-3 sm:p-5 space-y-2 min-w-0">
+                  <div className="flex flex-wrap items-center gap-x-2 gap-y-1 text-[11px] text-muted-foreground">
+                    <span className="inline-flex items-center gap-1"><Clock className="h-3 w-3" /> {s.timestamp}</span>
+                    <span className="inline-flex items-center gap-1"><MapPin className="h-3 w-3" /> {s.park}</span>
+                    <span className="px-2 py-0.5 rounded-full bg-[var(--forest)]/12 text-[var(--forest)] font-semibold">
                       {s.behavior}
                     </span>
                   </div>
-                  <h3 className="font-display text-xl font-bold">
+                  <h3 className="font-display text-lg sm:text-xl font-bold">
                     {s.count} × {s.species}
                   </h3>
-                  <p className="text-sm text-foreground/80 leading-relaxed">{s.narrative}</p>
-                  <div className="text-[11px] text-muted-foreground font-mono">
+                  <p className="text-sm text-foreground/80 leading-relaxed line-clamp-3 sm:line-clamp-none">{s.narrative}</p>
+                  <div className="text-[11px] text-muted-foreground font-mono truncate">
                     📍 {s.location} · {s.gps.lat.toFixed(4)}, {s.gps.lng.toFixed(4)}
                   </div>
                 </div>
