@@ -47,6 +47,9 @@
   --color-maasai-foreground: var(--maasai-foreground);
   --color-forest: var(--forest);
   --color-forest-foreground: var(--forest-foreground);
+  --color-emerald: var(--emerald);
+  --color-emerald-foreground: var(--emerald-foreground);
+  --color-ivory: var(--ivory);
   --color-savanna: var(--savanna);
   --color-charcoal: var(--charcoal);
 
