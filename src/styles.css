@@ -193,6 +193,10 @@
   --forest: oklch(0.68 0.16 158);
   --forest-foreground: oklch(0.14 0.018 260);
 
+  --emerald: oklch(0.7 0.14 165);
+  --emerald-foreground: oklch(0.14 0.018 260);
+  --ivory: oklch(0.97 0.008 90);
+
   --savanna: oklch(0.24 0.03 255);
   --charcoal: oklch(0.08 0.015 260);
 
