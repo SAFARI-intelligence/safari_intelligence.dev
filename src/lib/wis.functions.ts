@@ -11,9 +11,8 @@ type JournalInput = {
   bookingId?: string | null;
 };
 
-// Auth-required: returns a shared species fact. Uses admin to read/write the shared cache row.
+// Public: returns a shared species fact. Uses admin to read/write the shared cache row.
 export const getSpeciesFact = createServerFn({ method: 'POST' })
-  .middleware([requireSupabaseAuth])
   .inputValidator((input: unknown) => {
     const v = input as SpeciesFactInput;
     if (!v?.species || typeof v.species !== 'string' || v.species.length > 80) {
