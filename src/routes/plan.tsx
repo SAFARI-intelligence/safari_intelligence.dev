@@ -55,6 +55,13 @@ function PlanPage() {
   const [loading, setLoading] = useState(false);
   const [itinerary, setItinerary] = useState<Itinerary | null>(null);
   const [showNps, setShowNps] = useState(false);
+  const [npsDismissed, setNpsDismissed] = useState(false);
+
+  useEffect(() => {
+    if (itinerary && !loading && !npsDismissed) {
+      setShowNps(true);
+    }
+  }, [itinerary, loading, npsDismissed]);
 
   const toggle = (arr: string[], setArr: (v: string[]) => void, val: string) =>
     setArr(arr.includes(val) ? arr.filter((v) => v !== val) : [...arr, val]);
