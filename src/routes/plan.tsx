@@ -1,8 +1,9 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Sparkles, Loader2, MapPin, Users, Wallet, Heart, Save, Leaf } from "lucide-react";
 import { Shell } from "@/components/safari/Shell";
+import NPSCaptureModal from "@/components/safari/NPSCaptureModal";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/lib/auth";
 import { toast } from "sonner";
