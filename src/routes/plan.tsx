@@ -1,8 +1,9 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Sparkles, Loader2, MapPin, Users, Wallet, Heart, Save, Leaf } from "lucide-react";
 import { Shell } from "@/components/safari/Shell";
+import NPSCaptureModal from "@/components/safari/NPSCaptureModal";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/lib/auth";
 import { toast } from "sonner";
@@ -53,6 +54,19 @@ function PlanPage() {
   const [groupSize, setGroupSize] = useState(2);
   const [loading, setLoading] = useState(false);
   const [itinerary, setItinerary] = useState<Itinerary | null>(null);
+  const [showNps, setShowNps] = useState(false);
+  const [npsDismissed, setNpsDismissed] = useState(false);
+
+  useEffect(() => {
+    if (itinerary && !loading && !npsDismissed) {
+      setShowNps(true);
+    }
+  }, [itinerary, loading, npsDismissed]);
+
+  const handleNpsClose = () => {
+    setShowNps(false);
+    setNpsDismissed(true);
+  };
 
   const toggle = (arr: string[], setArr: (v: string[]) => void, val: string) =>
     setArr(arr.includes(val) ? arr.filter((v) => v !== val) : [...arr, val]);
@@ -359,6 +373,11 @@ function PlanPage() {
           </div>
         </div>
       </div>
+
+      <NPSCaptureModal
+        isVisible={showNps}
+        onClose={handleNpsClose}
+      />
     </Shell>
   );
 }
