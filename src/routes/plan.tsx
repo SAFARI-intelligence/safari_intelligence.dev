@@ -63,6 +63,11 @@ function PlanPage() {
     }
   }, [itinerary, loading, npsDismissed]);
 
+  const handleNpsClose = () => {
+    setShowNps(false);
+    setNpsDismissed(true);
+  };
+
   const toggle = (arr: string[], setArr: (v: string[]) => void, val: string) =>
     setArr(arr.includes(val) ? arr.filter((v) => v !== val) : [...arr, val]);
 
