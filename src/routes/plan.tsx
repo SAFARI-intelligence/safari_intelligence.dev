@@ -54,6 +54,7 @@ function PlanPage() {
   const [groupSize, setGroupSize] = useState(2);
   const [loading, setLoading] = useState(false);
   const [itinerary, setItinerary] = useState<Itinerary | null>(null);
+  const [showNps, setShowNps] = useState(false);
 
   const toggle = (arr: string[], setArr: (v: string[]) => void, val: string) =>
     setArr(arr.includes(val) ? arr.filter((v) => v !== val) : [...arr, val]);
