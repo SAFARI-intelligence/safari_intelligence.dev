@@ -373,6 +373,11 @@ function PlanPage() {
           </div>
         </div>
       </div>
+
+      <NPSCaptureModal
+        isVisible={showNps}
+        onClose={handleNpsClose}
+      />
     </Shell>
   );
 }
