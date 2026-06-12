@@ -18,6 +18,7 @@ import { Route as ProfileRouteImport } from './routes/profile'
 import { Route as PlanRouteImport } from './routes/plan'
 import { Route as PayRouteImport } from './routes/pay'
 import { Route as PartnerRouteImport } from './routes/partner'
+import { Route as OutreachRouteImport } from './routes/outreach'
 import { Route as OperatorRouteImport } from './routes/operator'
 import { Route as MapRouteImport } from './routes/map'
 import { Route as JournalRouteImport } from './routes/journal'
@@ -88,6 +89,11 @@ const PayRoute = PayRouteImport.update({
 const PartnerRoute = PartnerRouteImport.update({
   id: '/partner',
   path: '/partner',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const OutreachRoute = OutreachRouteImport.update({
+  id: '/outreach',
+  path: '/outreach',
   getParentRoute: () => rootRouteImport,
 } as any)
 const OperatorRoute = OperatorRouteImport.update({
@@ -232,6 +238,7 @@ export interface FileRoutesByFullPath {
   '/journal': typeof JournalRoute
   '/map': typeof MapRoute
   '/operator': typeof OperatorRouteWithChildren
+  '/outreach': typeof OutreachRoute
   '/partner': typeof PartnerRoute
   '/pay': typeof PayRouteWithChildren
   '/plan': typeof PlanRoute
@@ -268,6 +275,7 @@ export interface FileRoutesByTo {
   '/intelligence': typeof IntelligenceRoute
   '/journal': typeof JournalRoute
   '/map': typeof MapRoute
+  '/outreach': typeof OutreachRoute
   '/partner': typeof PartnerRoute
   '/plan': typeof PlanRoute
   '/profile': typeof ProfileRoute
@@ -305,6 +313,7 @@ export interface FileRoutesById {
   '/journal': typeof JournalRoute
   '/map': typeof MapRoute
   '/operator': typeof OperatorRouteWithChildren
+  '/outreach': typeof OutreachRoute
   '/partner': typeof PartnerRoute
   '/pay': typeof PayRouteWithChildren
   '/plan': typeof PlanRoute
@@ -344,6 +353,7 @@ export interface FileRouteTypes {
     | '/journal'
     | '/map'
     | '/operator'
+    | '/outreach'
     | '/partner'
     | '/pay'
     | '/plan'
@@ -380,6 +390,7 @@ export interface FileRouteTypes {
     | '/intelligence'
     | '/journal'
     | '/map'
+    | '/outreach'
     | '/partner'
     | '/plan'
     | '/profile'
@@ -416,6 +427,7 @@ export interface FileRouteTypes {
     | '/journal'
     | '/map'
     | '/operator'
+    | '/outreach'
     | '/partner'
     | '/pay'
     | '/plan'
@@ -454,6 +466,7 @@ export interface RootRouteChildren {
   JournalRoute: typeof JournalRoute
   MapRoute: typeof MapRoute
   OperatorRoute: typeof OperatorRouteWithChildren
+  OutreachRoute: typeof OutreachRoute
   PartnerRoute: typeof PartnerRoute
   PayRoute: typeof PayRouteWithChildren
   PlanRoute: typeof PlanRoute
@@ -528,6 +541,13 @@ declare module '@tanstack/react-router' {
       path: '/partner'
       fullPath: '/partner'
       preLoaderRoute: typeof PartnerRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/outreach': {
+      id: '/outreach'
+      path: '/outreach'
+      fullPath: '/outreach'
+      preLoaderRoute: typeof OutreachRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/operator': {
@@ -803,6 +823,7 @@ const rootRouteChildren: RootRouteChildren = {
   JournalRoute: JournalRoute,
   MapRoute: MapRoute,
   OperatorRoute: OperatorRouteWithChildren,
+  OutreachRoute: OutreachRoute,
   PartnerRoute: PartnerRoute,
   PayRoute: PayRouteWithChildren,
   PlanRoute: PlanRoute,
@@ -816,13 +837,3 @@ const rootRouteChildren: RootRouteChildren = {
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { startInstance } from './start.ts'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-    config: Awaited<ReturnType<typeof startInstance.getOptions>>
-  }
-}
