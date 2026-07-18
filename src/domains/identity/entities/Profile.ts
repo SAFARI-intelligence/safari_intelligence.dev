@@ -1,6 +1,7 @@
 // Identity Domain — Profile entity aligned with public.profiles schema.
 
-export type Preferences = Record<string, unknown>;
+export type PreferenceValue = string | number | boolean | null | PreferenceValue[] | { [k: string]: PreferenceValue };
+export type Preferences = { [key: string]: PreferenceValue };
 
 export interface Profile {
   id: string;

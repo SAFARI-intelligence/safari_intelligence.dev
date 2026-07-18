@@ -4,7 +4,7 @@ import { APP_ROLES } from "../entities/Role";
 export const profileUpdateSchema = z.object({
   name: z.string().trim().min(1).max(80).optional(),
   profile_image: z.string().url().max(500).nullable().optional(),
-  preferences: z.record(z.string(), z.unknown()).optional(),
+  preferences: z.record(z.string(), z.any()).optional(),
 });
 
 export const assignRoleSchema = z.object({

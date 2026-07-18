@@ -28,12 +28,10 @@ async function buildContext(ctx: { supabase: unknown; userId: string }) {
   };
 }
 
-function wrap<T>(err: unknown): never {
+function wrap(err: unknown): never {
   if (err instanceof IdentityError) throw new Error(`${err.code}: ${err.message}`);
   console.error("[identity.functions] unexpected", err);
   throw new Error(toSafeMessage(err));
-  // Unreachable
-  return undefined as unknown as T;
 }
 
 export const getMyProfile = createServerFn({ method: "GET" })
