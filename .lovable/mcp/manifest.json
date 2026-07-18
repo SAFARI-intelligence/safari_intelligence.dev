@@ -1,0 +1,101 @@
+{
+  "version": 1,
+  "sdk_version": "0.23.0",
+  "path": "/mcp",
+  "auth": {
+    "type": "none"
+  },
+  "mcp": {
+    "server": {
+      "name": "safari-mcp",
+      "version": "0.1.0",
+      "title": "SAFARI"
+    },
+    "tools": [
+      {
+        "name": "list_parks",
+        "title": "List parks",
+        "description": "List East African safari parks tracked by SAFARI, with country, live AI sighting counts, weather, status, and highlights.",
+        "annotations": {
+          "readOnlyHint": true,
+          "idempotentHint": true,
+          "openWorldHint": false
+        },
+        "inputSchema": {
+          "$schema": "http://json-schema.org/draft-07/schema#",
+          "type": "object",
+          "properties": {
+            "country": {
+              "description": "Optional filter by country.",
+              "type": "string",
+              "enum": [
+                "Kenya",
+                "Tanzania",
+                "Uganda",
+                "Rwanda"
+              ]
+            }
+          }
+        },
+        "outputSchema": null
+      },
+      {
+        "name": "list_sightings",
+        "title": "List wildlife sightings",
+        "description": "Return recent AI-detected wildlife sightings across SAFARI's parks (zone-level, delayed for conservation safety). Optionally filter by species or park.",
+        "annotations": {
+          "readOnlyHint": true,
+          "idempotentHint": true,
+          "openWorldHint": false
+        },
+        "inputSchema": {
+          "$schema": "http://json-schema.org/draft-07/schema#",
+          "type": "object",
+          "properties": {
+            "species": {
+              "description": "Species name, e.g. Lion, Elephant, Cheetah.",
+              "type": "string"
+            },
+            "park": {
+              "description": "Park name, e.g. Maasai Mara, Serengeti.",
+              "type": "string"
+            },
+            "limit": {
+              "description": "Max sightings to return.",
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 50
+            }
+          }
+        },
+        "outputSchema": null
+      },
+      {
+        "name": "list_safari_packages",
+        "title": "List safari packages",
+        "description": "Browse bookable SAFARI packages with price in KSh/USD, duration, country, inclusions and rating. Optionally filter by country or max price.",
+        "annotations": {
+          "readOnlyHint": true,
+          "idempotentHint": true,
+          "openWorldHint": false
+        },
+        "inputSchema": {
+          "$schema": "http://json-schema.org/draft-07/schema#",
+          "type": "object",
+          "properties": {
+            "country": {
+              "description": "Country name filter.",
+              "type": "string"
+            },
+            "maxPriceUsd": {
+              "description": "Max package price in USD.",
+              "type": "number",
+              "exclusiveMinimum": 0
+            }
+          }
+        },
+        "outputSchema": null
+      }
+    ]
+  }
+}

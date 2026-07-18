@@ -20,6 +20,7 @@ import { Route as PayRouteImport } from './routes/pay'
 import { Route as PartnerRouteImport } from './routes/partner'
 import { Route as OutreachRouteImport } from './routes/outreach'
 import { Route as OperatorRouteImport } from './routes/operator'
+import { Route as McpRouteImport } from './routes/mcp'
 import { Route as MapRouteImport } from './routes/map'
 import { Route as JournalRouteImport } from './routes/journal'
 import { Route as IntelligenceRouteImport } from './routes/intelligence'
@@ -42,8 +43,11 @@ import { Route as OperatorListingsRouteImport } from './routes/operator.listings
 import { Route as OperatorBookingsRouteImport } from './routes/operator.bookings'
 import { Route as OperatorAnalyticsRouteImport } from './routes/operator.analytics'
 import { Route as HotelsHotelIdRouteImport } from './routes/hotels.$hotelId'
+import { Route as Char91DotwellKnownChar93OauthProtectedResourceRouteImport } from './routes/[.well-known]/oauth-protected-resource'
+import { Route as Char91DotmcpChar93ListToolsRouteImport } from './routes/[.mcp]/list-tools'
 import { Route as PayCheckoutTripIdRouteImport } from './routes/pay.checkout.$tripId'
 import { Route as OperatorListingsNewRouteImport } from './routes/operator.listings.new'
+import { Route as Char91DotmcpChar93InvokeToolToolRouteImport } from './routes/[.mcp]/invoke-tool/$tool'
 import { Route as OperatorListingsIdEditRouteImport } from './routes/operator.listings.$id.edit'
 
 const WildlifeRoute = WildlifeRouteImport.update({
@@ -99,6 +103,11 @@ const OutreachRoute = OutreachRouteImport.update({
 const OperatorRoute = OperatorRouteImport.update({
   id: '/operator',
   path: '/operator',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const McpRoute = McpRouteImport.update({
+  id: '/mcp',
+  path: '/mcp',
   getParentRoute: () => rootRouteImport,
 } as any)
 const MapRoute = MapRouteImport.update({
@@ -211,6 +220,18 @@ const HotelsHotelIdRoute = HotelsHotelIdRouteImport.update({
   path: '/$hotelId',
   getParentRoute: () => HotelsRoute,
 } as any)
+const Char91DotwellKnownChar93OauthProtectedResourceRoute =
+  Char91DotwellKnownChar93OauthProtectedResourceRouteImport.update({
+    id: '/.well-known/oauth-protected-resource',
+    path: '/.well-known/oauth-protected-resource',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const Char91DotmcpChar93ListToolsRoute =
+  Char91DotmcpChar93ListToolsRouteImport.update({
+    id: '/.mcp/list-tools',
+    path: '/.mcp/list-tools',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 const PayCheckoutTripIdRoute = PayCheckoutTripIdRouteImport.update({
   id: '/checkout/$tripId',
   path: '/checkout/$tripId',
@@ -221,6 +242,12 @@ const OperatorListingsNewRoute = OperatorListingsNewRouteImport.update({
   path: '/new',
   getParentRoute: () => OperatorListingsRoute,
 } as any)
+const Char91DotmcpChar93InvokeToolToolRoute =
+  Char91DotmcpChar93InvokeToolToolRouteImport.update({
+    id: '/.mcp/invoke-tool/$tool',
+    path: '/.mcp/invoke-tool/$tool',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 const OperatorListingsIdEditRoute = OperatorListingsIdEditRouteImport.update({
   id: '/$id/edit',
   path: '/$id/edit',
@@ -237,6 +264,7 @@ export interface FileRoutesByFullPath {
   '/intelligence': typeof IntelligenceRoute
   '/journal': typeof JournalRoute
   '/map': typeof MapRoute
+  '/mcp': typeof McpRoute
   '/operator': typeof OperatorRouteWithChildren
   '/outreach': typeof OutreachRoute
   '/partner': typeof PartnerRoute
@@ -248,6 +276,8 @@ export interface FileRoutesByFullPath {
   '/support': typeof SupportRoute
   '/wallet': typeof WalletRoute
   '/wildlife': typeof WildlifeRoute
+  '/.mcp/list-tools': typeof Char91DotmcpChar93ListToolsRoute
+  '/.well-known/oauth-protected-resource': typeof Char91DotwellKnownChar93OauthProtectedResourceRoute
   '/hotels/$hotelId': typeof HotelsHotelIdRoute
   '/operator/analytics': typeof OperatorAnalyticsRoute
   '/operator/bookings': typeof OperatorBookingsRoute
@@ -261,6 +291,7 @@ export interface FileRoutesByFullPath {
   '/stories/$slug': typeof StoriesSlugRoute
   '/operator/': typeof OperatorIndexRoute
   '/pay/': typeof PayIndexRoute
+  '/.mcp/invoke-tool/$tool': typeof Char91DotmcpChar93InvokeToolToolRoute
   '/operator/listings/new': typeof OperatorListingsNewRoute
   '/pay/checkout/$tripId': typeof PayCheckoutTripIdRoute
   '/operator/listings/$id/edit': typeof OperatorListingsIdEditRoute
@@ -275,6 +306,7 @@ export interface FileRoutesByTo {
   '/intelligence': typeof IntelligenceRoute
   '/journal': typeof JournalRoute
   '/map': typeof MapRoute
+  '/mcp': typeof McpRoute
   '/outreach': typeof OutreachRoute
   '/partner': typeof PartnerRoute
   '/plan': typeof PlanRoute
@@ -284,6 +316,8 @@ export interface FileRoutesByTo {
   '/support': typeof SupportRoute
   '/wallet': typeof WalletRoute
   '/wildlife': typeof WildlifeRoute
+  '/.mcp/list-tools': typeof Char91DotmcpChar93ListToolsRoute
+  '/.well-known/oauth-protected-resource': typeof Char91DotwellKnownChar93OauthProtectedResourceRoute
   '/hotels/$hotelId': typeof HotelsHotelIdRoute
   '/operator/analytics': typeof OperatorAnalyticsRoute
   '/operator/bookings': typeof OperatorBookingsRoute
@@ -297,6 +331,7 @@ export interface FileRoutesByTo {
   '/stories/$slug': typeof StoriesSlugRoute
   '/operator': typeof OperatorIndexRoute
   '/pay': typeof PayIndexRoute
+  '/.mcp/invoke-tool/$tool': typeof Char91DotmcpChar93InvokeToolToolRoute
   '/operator/listings/new': typeof OperatorListingsNewRoute
   '/pay/checkout/$tripId': typeof PayCheckoutTripIdRoute
   '/operator/listings/$id/edit': typeof OperatorListingsIdEditRoute
@@ -312,6 +347,7 @@ export interface FileRoutesById {
   '/intelligence': typeof IntelligenceRoute
   '/journal': typeof JournalRoute
   '/map': typeof MapRoute
+  '/mcp': typeof McpRoute
   '/operator': typeof OperatorRouteWithChildren
   '/outreach': typeof OutreachRoute
   '/partner': typeof PartnerRoute
@@ -323,6 +359,8 @@ export interface FileRoutesById {
   '/support': typeof SupportRoute
   '/wallet': typeof WalletRoute
   '/wildlife': typeof WildlifeRoute
+  '/.mcp/list-tools': typeof Char91DotmcpChar93ListToolsRoute
+  '/.well-known/oauth-protected-resource': typeof Char91DotwellKnownChar93OauthProtectedResourceRoute
   '/hotels/$hotelId': typeof HotelsHotelIdRoute
   '/operator/analytics': typeof OperatorAnalyticsRoute
   '/operator/bookings': typeof OperatorBookingsRoute
@@ -336,6 +374,7 @@ export interface FileRoutesById {
   '/stories/$slug': typeof StoriesSlugRoute
   '/operator/': typeof OperatorIndexRoute
   '/pay/': typeof PayIndexRoute
+  '/.mcp/invoke-tool/$tool': typeof Char91DotmcpChar93InvokeToolToolRoute
   '/operator/listings/new': typeof OperatorListingsNewRoute
   '/pay/checkout/$tripId': typeof PayCheckoutTripIdRoute
   '/operator/listings/$id/edit': typeof OperatorListingsIdEditRoute
@@ -352,6 +391,7 @@ export interface FileRouteTypes {
     | '/intelligence'
     | '/journal'
     | '/map'
+    | '/mcp'
     | '/operator'
     | '/outreach'
     | '/partner'
@@ -363,6 +403,8 @@ export interface FileRouteTypes {
     | '/support'
     | '/wallet'
     | '/wildlife'
+    | '/.mcp/list-tools'
+    | '/.well-known/oauth-protected-resource'
     | '/hotels/$hotelId'
     | '/operator/analytics'
     | '/operator/bookings'
@@ -376,6 +418,7 @@ export interface FileRouteTypes {
     | '/stories/$slug'
     | '/operator/'
     | '/pay/'
+    | '/.mcp/invoke-tool/$tool'
     | '/operator/listings/new'
     | '/pay/checkout/$tripId'
     | '/operator/listings/$id/edit'
@@ -390,6 +433,7 @@ export interface FileRouteTypes {
     | '/intelligence'
     | '/journal'
     | '/map'
+    | '/mcp'
     | '/outreach'
     | '/partner'
     | '/plan'
@@ -399,6 +443,8 @@ export interface FileRouteTypes {
     | '/support'
     | '/wallet'
     | '/wildlife'
+    | '/.mcp/list-tools'
+    | '/.well-known/oauth-protected-resource'
     | '/hotels/$hotelId'
     | '/operator/analytics'
     | '/operator/bookings'
@@ -412,6 +458,7 @@ export interface FileRouteTypes {
     | '/stories/$slug'
     | '/operator'
     | '/pay'
+    | '/.mcp/invoke-tool/$tool'
     | '/operator/listings/new'
     | '/pay/checkout/$tripId'
     | '/operator/listings/$id/edit'
@@ -426,6 +473,7 @@ export interface FileRouteTypes {
     | '/intelligence'
     | '/journal'
     | '/map'
+    | '/mcp'
     | '/operator'
     | '/outreach'
     | '/partner'
@@ -437,6 +485,8 @@ export interface FileRouteTypes {
     | '/support'
     | '/wallet'
     | '/wildlife'
+    | '/.mcp/list-tools'
+    | '/.well-known/oauth-protected-resource'
     | '/hotels/$hotelId'
     | '/operator/analytics'
     | '/operator/bookings'
@@ -450,6 +500,7 @@ export interface FileRouteTypes {
     | '/stories/$slug'
     | '/operator/'
     | '/pay/'
+    | '/.mcp/invoke-tool/$tool'
     | '/operator/listings/new'
     | '/pay/checkout/$tripId'
     | '/operator/listings/$id/edit'
@@ -465,6 +516,7 @@ export interface RootRouteChildren {
   IntelligenceRoute: typeof IntelligenceRoute
   JournalRoute: typeof JournalRoute
   MapRoute: typeof MapRoute
+  McpRoute: typeof McpRoute
   OperatorRoute: typeof OperatorRouteWithChildren
   OutreachRoute: typeof OutreachRoute
   PartnerRoute: typeof PartnerRoute
@@ -476,6 +528,9 @@ export interface RootRouteChildren {
   SupportRoute: typeof SupportRoute
   WalletRoute: typeof WalletRoute
   WildlifeRoute: typeof WildlifeRoute
+  Char91DotmcpChar93ListToolsRoute: typeof Char91DotmcpChar93ListToolsRoute
+  Char91DotwellKnownChar93OauthProtectedResourceRoute: typeof Char91DotwellKnownChar93OauthProtectedResourceRoute
+  Char91DotmcpChar93InvokeToolToolRoute: typeof Char91DotmcpChar93InvokeToolToolRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -555,6 +610,13 @@ declare module '@tanstack/react-router' {
       path: '/operator'
       fullPath: '/operator'
       preLoaderRoute: typeof OperatorRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/mcp': {
+      id: '/mcp'
+      path: '/mcp'
+      fullPath: '/mcp'
+      preLoaderRoute: typeof McpRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/map': {
@@ -711,6 +773,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof HotelsHotelIdRouteImport
       parentRoute: typeof HotelsRoute
     }
+    '/.well-known/oauth-protected-resource': {
+      id: '/.well-known/oauth-protected-resource'
+      path: '/.well-known/oauth-protected-resource'
+      fullPath: '/.well-known/oauth-protected-resource'
+      preLoaderRoute: typeof Char91DotwellKnownChar93OauthProtectedResourceRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/.mcp/list-tools': {
+      id: '/.mcp/list-tools'
+      path: '/.mcp/list-tools'
+      fullPath: '/.mcp/list-tools'
+      preLoaderRoute: typeof Char91DotmcpChar93ListToolsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/pay/checkout/$tripId': {
       id: '/pay/checkout/$tripId'
       path: '/checkout/$tripId'
@@ -724,6 +800,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/operator/listings/new'
       preLoaderRoute: typeof OperatorListingsNewRouteImport
       parentRoute: typeof OperatorListingsRoute
+    }
+    '/.mcp/invoke-tool/$tool': {
+      id: '/.mcp/invoke-tool/$tool'
+      path: '/.mcp/invoke-tool/$tool'
+      fullPath: '/.mcp/invoke-tool/$tool'
+      preLoaderRoute: typeof Char91DotmcpChar93InvokeToolToolRouteImport
+      parentRoute: typeof rootRouteImport
     }
     '/operator/listings/$id/edit': {
       id: '/operator/listings/$id/edit'
@@ -822,6 +905,7 @@ const rootRouteChildren: RootRouteChildren = {
   IntelligenceRoute: IntelligenceRoute,
   JournalRoute: JournalRoute,
   MapRoute: MapRoute,
+  McpRoute: McpRoute,
   OperatorRoute: OperatorRouteWithChildren,
   OutreachRoute: OutreachRoute,
   PartnerRoute: PartnerRoute,
@@ -833,6 +917,10 @@ const rootRouteChildren: RootRouteChildren = {
   SupportRoute: SupportRoute,
   WalletRoute: WalletRoute,
   WildlifeRoute: WildlifeRoute,
+  Char91DotmcpChar93ListToolsRoute: Char91DotmcpChar93ListToolsRoute,
+  Char91DotwellKnownChar93OauthProtectedResourceRoute:
+    Char91DotwellKnownChar93OauthProtectedResourceRoute,
+  Char91DotmcpChar93InvokeToolToolRoute: Char91DotmcpChar93InvokeToolToolRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
