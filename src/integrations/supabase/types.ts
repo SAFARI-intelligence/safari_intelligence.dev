@@ -297,6 +297,39 @@ export type Database = {
         }
         Relationships: []
       }
+      identity_audit_log: {
+        Row: {
+          action: string
+          actor_id: string | null
+          id: string
+          ip: string | null
+          metadata: Json
+          occurred_at: string
+          user_agent: string | null
+          user_id: string
+        }
+        Insert: {
+          action: string
+          actor_id?: string | null
+          id?: string
+          ip?: string | null
+          metadata?: Json
+          occurred_at?: string
+          user_agent?: string | null
+          user_id: string
+        }
+        Update: {
+          action?: string
+          actor_id?: string | null
+          id?: string
+          ip?: string | null
+          metadata?: Json
+          occurred_at?: string
+          user_agent?: string | null
+          user_id?: string
+        }
+        Relationships: []
+      }
       itineraries: {
         Row: {
           budget_tier: string | null
@@ -619,6 +652,36 @@ export type Database = {
           trip_balance?: number
           updated_at?: string
           user_id?: string
+        }
+        Relationships: []
+      }
+      platform_events: {
+        Row: {
+          actor_id: string | null
+          aggregate_id: string | null
+          domain: string
+          id: string
+          name: string
+          occurred_at: string
+          payload: Json
+        }
+        Insert: {
+          actor_id?: string | null
+          aggregate_id?: string | null
+          domain: string
+          id?: string
+          name: string
+          occurred_at?: string
+          payload?: Json
+        }
+        Update: {
+          actor_id?: string | null
+          aggregate_id?: string | null
+          domain?: string
+          id?: string
+          name?: string
+          occurred_at?: string
+          payload?: Json
         }
         Relationships: []
       }
@@ -974,7 +1037,15 @@ export type Database = {
       }
     }
     Enums: {
-      app_role: "user" | "hotel" | "support"
+      app_role:
+        | "user"
+        | "hotel"
+        | "support"
+        | "tourist"
+        | "operator"
+        | "admin"
+        | "ranger"
+        | "researcher"
       booking_status: "pending" | "confirmed" | "cancelled"
       hotel_type: "hotel" | "villa" | "lodge" | "camp"
       pay_booking_status: "pending" | "confirmed" | "cancelled" | "completed"
@@ -1118,7 +1189,16 @@ export type CompositeTypes<
 export const Constants = {
   public: {
     Enums: {
-      app_role: ["user", "hotel", "support"],
+      app_role: [
+        "user",
+        "hotel",
+        "support",
+        "tourist",
+        "operator",
+        "admin",
+        "ranger",
+        "researcher",
+      ],
       booking_status: ["pending", "confirmed", "cancelled"],
       hotel_type: ["hotel", "villa", "lodge", "camp"],
       pay_booking_status: ["pending", "confirmed", "cancelled", "completed"],

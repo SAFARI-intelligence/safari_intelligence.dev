@@ -1,120 +1,136 @@
+# Phase 2 — Identity Domain (Platform Core)
 
-# SAFARI · Wildlife Intelligence + Storytelling — Phase 1
+Scope is strictly the Identity Domain. No changes to Payments, WIS, Booking, or MCP code paths beyond the role rename shim.
 
-Narrative Synthesis first. Predictive Movement Modeling is **Phase 2** (scaffolded only — schema reserved, no UI).
+## 1. Current state (verified from schema + db-functions above)
 
-## Goal
+- `app_role` enum today: `user`, `hotel`, `support`.
+- `profiles` (7 cols) and `user_roles` (4 cols) already exist with RLS + `has_role()` + `handle_new_user()` trigger.
+- No event bus, no audit log, no domain-layer folders.
+- Roles asked for: **Tourist, Ranger, Researcher, Operator, Admin**.
 
-Turn the static `sightings` feed into a personalized, AI-narrated experience:
-1. Tourists keep a **Digital Safari Journal** (sighting + note + optional photo).
-2. AI auto-drafts a **daily narrative snippet** per journal entry.
-3. The Wildlife Story Feed surfaces a **"Did you know?"** contextual snippet for the selected sighting.
-4. After a trip, a **Top 5 Intelligence Moments** summary is generated, scored by a simple rarity index.
+Mapping (non-breaking — existing rows keep working):
 
-All real: Supabase tables, RLS, Lovable AI via `createServerFn` (no edge functions).
+| New semantic role | Enum value stored |
+|---|---|
+| Tourist   | `tourist`  (alias of legacy `user`)   |
+| Operator  | `operator` (alias of legacy `hotel`)  |
+| Admin     | `admin`    (alias of legacy `support`)|
+| Ranger    | `ranger`   (new)                      |
+| Researcher| `researcher` (new)                    |
 
----
+Enum values are additive; a data migration converts legacy values, and `has_role()` stays as-is.
 
-## Scope
-
-### In
-- New tables: `wis_journal_entries`, `wis_narratives`, `wis_species_rarity` (seed data), `wis_trip_summaries`
-- New server functions in `src/lib/wis.functions.ts` + AI helper in `src/lib/wis-ai.server.ts`
-- New route `/_authenticated/journal` — list + create journal entries, view AI snippets
-- Wildlife feed (`/wildlife`): inline **"Did you know?"** panel for selected sighting (AI, cached per species+behavior)
-- Post-trip summary card on `/profile` calling `generateTripSummary(bookingId)`
-
-### Out (Phase 2 — not built now)
-- Predictive probability map / heatmap
-- Ethological auto-classification of all sightings (reserved column only)
-- Edge-compute telemetry ingestion
-- Share/export of narratives
-
----
-
-## Data model
+## 2. Folder structure (DDD, TypeScript)
 
 ```text
-wis_journal_entries
-  id, user_id, booking_id (nullable, → pay_bookings),
-  species, park, observed_at, note (≤500), photo_url (nullable),
-  behavior_tag (nullable, free text for now),
-  created_at, updated_at
+src/domains/identity/
+  entities/
+    User.ts               # domain entity + invariants
+    Profile.ts
+    Role.ts               # AppRole union + guards
+  repositories/
+    ProfileRepository.ts  # interface + supabase impl (server-only)
+    RoleRepository.ts
+    AuditRepository.ts
+  services/
+    IdentityService.ts    # register/verify/assign-role orchestration
+    ProfileService.ts
+  validation/
+    schemas.ts            # zod: ProfileUpdate, RoleAssign, Register
+  events/
+    identityEvents.ts     # event names + payload types
+  index.ts                # public barrel (safe imports only)
 
-wis_narratives                          -- one per journal entry; also reused for "Did you know?"
-  id, user_id (nullable for shared species facts),
-  scope ('journal' | 'species_fact' | 'trip_summary'),
-  ref_id (journal_entry_id | sighting species key | booking_id),
-  model, prompt_hash, body (text), tokens_in, tokens_out,
-  created_at
-  UNIQUE (scope, ref_id, prompt_hash)   -- cache key
+src/lib/identity/
+  identity.functions.ts   # createServerFn wrappers (client-callable)
 
-wis_species_rarity                       -- seeded, read-only to clients
-  species PK, rarity_score (1-10), region, notes
+src/lib/events/
+  eventBus.ts             # thin emitter -> platform_events table
+  eventBus.server.ts      # server-only writer using supabaseAdmin
 
-wis_trip_summaries
-  id, user_id, booking_id, top_moments jsonb, narrative text, created_at
+src/routes/_authenticated/
+  account.tsx             # profile view/edit (tourist/ranger/researcher/operator)
+  account.security.tsx    # password change, sessions
+  admin.users.tsx         # admin-only user + role management (gated)
+
+tests/identity/
+  role.guard.test.ts
+  profileService.test.ts
+  identity.functions.integration.test.ts
 ```
 
-RLS: journal + trip_summaries scoped to `auth.uid()`. `wis_species_rarity` public read. `wis_narratives` readable by owner OR when `scope='species_fact'` (shared cache).
+Repositories are the **only** modules that touch Supabase directly. Services depend on repository interfaces. `identity.functions.ts` composes services and is the transport boundary.
 
-GRANTs in same migration per house rules.
+## 3. Database migration (single call, structural)
 
----
+- Extend enum: `ALTER TYPE app_role ADD VALUE IF NOT EXISTS 'tourist' | 'operator' | 'admin' | 'ranger' | 'researcher'`.
+- Backfill: `UPDATE user_roles SET role='tourist' WHERE role='user'` (same for hotel→operator, support→admin).
+- Update `handle_new_user()` default role from `'user'` → `'tourist'`, and self-escalation guard to block `'admin'` (currently blocks `'support'`).
+- Create `public.platform_events` (event bus append log):
+  - `id, domain, name, aggregate_id, actor_id, payload jsonb, occurred_at`
+  - RLS: only `admin` selects; `service_role` full; no anon.
+- Create `public.identity_audit_log`:
+  - `id, user_id, actor_id, action, ip, user_agent, metadata jsonb, occurred_at`
+  - RLS: user reads own rows, admin reads all, `service_role` writes.
+- Follow the four-step CREATE / GRANT / ENABLE RLS / POLICY structure for both.
+- No touch to `auth.*`, `payments.*`, `wis_*` tables.
 
-## Server functions (`src/lib/wis.functions.ts`)
+Legacy enum values are left in place (Postgres can't drop enum values online). Application code writes only new values.
 
-All use `requireSupabaseAuth` except `getSpeciesFact` (public).
+## 4. Event emission
 
-- `createJournalEntry({ species, park, observedAt, note, photoUrl?, bookingId? })` → inserts row, fires-and-awaits `generateJournalNarrative` then returns `{ entry, narrative }`.
-- `listMyJournal({ bookingId? })` → entries + narratives joined.
-- `getSpeciesFact({ species, behavior? })` → checks `wis_narratives` cache by `prompt_hash`; if miss, calls Lovable AI, inserts, returns body. **Used by `/wildlife` "Did you know?" panel.**
-- `generateTripSummary({ bookingId })` → loads user's journal for booking + species rarity, calls AI for Top 5 + narrative, upserts `wis_trip_summaries`.
+Business actions emitted through `eventBus.server.ts`:
 
-AI helper `src/lib/wis-ai.server.ts`:
-- Uses `createLovableAiGatewayProvider` (gateway pattern from knowledge).
-- Model: `google/gemini-3-flash-preview`.
-- `generateText` for snippets (short, 80–140 words).
-- `generateText` + `Output.object` with small Zod schema for trip summary (`{ top: [{title, why, rarityScore}], narrative }`).
-- Reads `process.env.LOVABLE_API_KEY` inside handler only.
+- `identity.user.registered` — from `handle_new_user()` (inserted directly into `platform_events` inside the trigger, since Supabase Auth signup is the source of truth).
+- `identity.user.verified` — server fn called after Supabase email confirmation redirect.
+- `identity.profile.updated` — from `ProfileService.update`.
+- `identity.role.assigned` — from `IdentityService.assignRole` (admin-only path).
 
----
+Payloads are typed in `events/identityEvents.ts`. Consumers are out of scope this PR (log-only).
 
-## UI
+## 5. Server functions (transport)
 
-- **`src/routes/_authenticated/journal.tsx`** — new. List view + "Add entry" form. Each card shows entry meta + AI narrative (Cormorant heading, DM Sans body, gold accent rule). Empty state with Swahili: *"Andika safari yako"*.
-- **`src/routes/wildlife.tsx`** — add right-aside "Did you know?" card under the JSON panel: calls `getSpeciesFact` on `selected` change with React Query; loading shimmer, error toast on 429/402.
-- **`src/routes/profile.tsx`** — add "Trip Reflections" section listing bookings with a "Generate summary" button → calls `generateTripSummary`, then renders Top 5 + narrative.
-- **`src/components/safari/Shell.tsx`** — add "Journal" nav link for `user` role.
+All under `src/lib/identity/identity.functions.ts`, using `createServerFn` + `requireSupabaseAuth` (except registration which is client-side Supabase Auth). Every handler: zod validate → service call → audit log → event emit → return DTO.
 
-Styling stays inside existing tokens (obsidian/amber/cream, glass cards, Maasai divider between snippets).
+- `getMyProfile()` — reads via RLS.
+- `updateMyProfile({ name, avatar_url, locale, phone })` — zod-validated, emits `profile.updated`.
+- `listUserRoles({ userId })` — admin-only via `has_role(auth.uid(),'admin')` check in service; RLS enforces too.
+- `assignRole({ userId, role })` — admin-only; forbidden for self-escalation to `admin`.
+- `revokeRole({ userId, role })` — admin-only.
+- `logSignInEvent({ method })` — client calls after `signInWithPassword` / OAuth success; writes audit row.
 
----
+## 6. Route guards & UI
 
-## Error handling
+- Reuse existing integration-managed `_authenticated/route.tsx`. Do NOT rewrite.
+- Add `RoleGuard` usage on `admin.users.tsx` requiring `admin`.
+- Existing `RoleGuard` shim (currently passthrough per prior turn) is updated to gate on the **new** role names while accepting legacy values through a `normalizeRole()` mapper — avoids breaking `/operator` and `/support` routes.
+- No change to auth pages, OAuth flow, or `/auth` route.
 
-Surface gateway 429 ("AI is busy — try again in a moment") and 402 ("AI credits exhausted — see workspace billing") as sonner toasts. Journal entry still saves even if narrative generation fails; narrative can be retried with a "Regenerate" button.
+## 7. Validation & error handling
 
----
+- All inputs: zod schemas in `validation/schemas.ts`, imported by both server fns and forms.
+- Server fns throw typed domain errors (`IdentityError`) mapped to safe messages; raw Supabase errors never leak.
+- Structured server logs: `console.info({ evt, userId, action })`; no PII in logs.
 
-## Files
+## 8. Tests (vitest)
 
-**Create**
-- `supabase/migrations/<ts>_wis_phase1.sql` (4 tables + GRANTs + RLS + rarity seed)
-- `src/lib/wis.functions.ts`
-- `src/lib/wis-ai.server.ts`
-- `src/lib/ai-gateway.server.ts` (if not already present — gateway helper from knowledge)
-- `src/routes/_authenticated/journal.tsx`
+- Unit: `Role` guards, `normalizeRole` mapping, zod schemas.
+- Service: `ProfileService.update` with a mocked repository — happy path, invalid input, forbidden.
+- Integration: `assignRole` server fn against a test user; verifies audit + event rows written.
 
-**Edit**
-- `src/routes/wildlife.tsx` (Did you know? aside)
-- `src/routes/profile.tsx` (Trip Reflections section)
-- `src/components/safari/Shell.tsx` (nav link)
+## 9. Migration steps (operational)
 
-No changes to: auth, payments RPCs, operator portal, support portal, RoleGuard, existing `safari-data.ts`.
+1. Approve the SQL migration (adds enum values, backfills, hardens trigger, creates `platform_events` + `identity_audit_log`).
+2. Regenerated Supabase types land automatically.
+3. Ship domain code + server fns + routes.
+4. Update `RoleGuard` normalization.
+5. Run `vitest`.
+6. Smoke-test: signup → tourist role + audit row + event row; admin promotes user → role row + event; profile edit → event.
 
----
+## 10. Explicitly out of scope
 
-## Phase 2 (deferred, for reference only)
-
-Predictive Movement Modeling will add `wis_observation_signals` (env vars + telemetry), `wis_probability_cells` (h3-style grid + score), a nightly `pg_cron` job that recomputes scores, and an overlay on `/wildlife`. Not built in this plan.
+- Payments, Wallet, WIS, MCP, Operator dashboards — untouched.
+- Removing legacy enum values (`user`/`hotel`/`support`) — deferred; requires a second migration once no code references them.
+- Consumers for `platform_events` (webhooks, projectors) — future PR.
+- Multi-factor auth, session revocation UI — future PR.

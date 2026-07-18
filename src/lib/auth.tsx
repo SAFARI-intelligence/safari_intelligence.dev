@@ -1,15 +1,17 @@
 import { createContext, useContext, useEffect, useState, type ReactNode } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import type { Session, User } from "@supabase/supabase-js";
+import { normalizeRoles, type AppRole as DomainRole } from "@/domains/identity/entities/Role";
 
-export type AppRole = "user" | "hotel" | "support";
+// Kept as a superset alias so existing imports of `AppRole` keep compiling.
+export type AppRole = DomainRole | "user" | "hotel" | "support";
 
 type AuthContextValue = {
   user: User | null;
   session: Session | null;
   roles: AppRole[];
   loading: boolean;
-  primaryRole: AppRole | null;
+  primaryRole: DomainRole | null;
   signOut: () => Promise<void>;
   refreshRoles: () => Promise<void>;
 };
@@ -22,6 +24,12 @@ async function fetchRoles(userId: string): Promise<AppRole[]> {
   return data.map((r) => r.role as AppRole);
 }
 
+function computePrimary(roles: AppRole[]): DomainRole | null {
+  const normalized = normalizeRoles(roles as string[]);
+  const priority: DomainRole[] = ["admin", "operator", "researcher", "ranger", "tourist"];
+  return priority.find((r) => normalized.includes(r)) ?? null;
+}
+
 export function AuthProvider({ children }: { children: ReactNode }) {
   const [session, setSession] = useState<Session | null>(null);
   const [user, setUser] = useState<User | null>(null);
@@ -29,12 +37,10 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // CRITICAL: subscribe BEFORE getSession
     const { data: sub } = supabase.auth.onAuthStateChange((_event, newSession) => {
       setSession(newSession);
       setUser(newSession?.user ?? null);
       if (newSession?.user) {
-        // defer to avoid deadlocks
         setTimeout(() => {
           fetchRoles(newSession.user.id).then(setRoles);
         }, 0);
@@ -68,17 +74,10 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     if (user) setRoles(await fetchRoles(user.id));
   };
 
-  // Priority: support > hotel > user
-  const primaryRole: AppRole | null = roles.includes("support")
-    ? "support"
-    : roles.includes("hotel")
-    ? "hotel"
-    : roles.includes("user")
-    ? "user"
-    : null;
-
   return (
-    <AuthContext.Provider value={{ user, session, roles, loading, primaryRole, signOut, refreshRoles }}>
+    <AuthContext.Provider
+      value={{ user, session, roles, loading, primaryRole: computePrimary(roles), signOut, refreshRoles }}
+    >
       {children}
     </AuthContext.Provider>
   );

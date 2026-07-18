@@ -43,10 +43,12 @@ import { Route as OperatorListingsRouteImport } from './routes/operator.listings
 import { Route as OperatorBookingsRouteImport } from './routes/operator.bookings'
 import { Route as OperatorAnalyticsRouteImport } from './routes/operator.analytics'
 import { Route as HotelsHotelIdRouteImport } from './routes/hotels.$hotelId'
+import { Route as AuthenticatedAccountRouteImport } from './routes/_authenticated/account'
 import { Route as Char91DotwellKnownChar93OauthProtectedResourceRouteImport } from './routes/[.well-known]/oauth-protected-resource'
 import { Route as Char91DotmcpChar93ListToolsRouteImport } from './routes/[.mcp]/list-tools'
 import { Route as PayCheckoutTripIdRouteImport } from './routes/pay.checkout.$tripId'
 import { Route as OperatorListingsNewRouteImport } from './routes/operator.listings.new'
+import { Route as AuthenticatedAdminUsersRouteImport } from './routes/_authenticated/admin.users'
 import { Route as Char91DotmcpChar93InvokeToolToolRouteImport } from './routes/[.mcp]/invoke-tool/$tool'
 import { Route as OperatorListingsIdEditRouteImport } from './routes/operator.listings.$id.edit'
 
@@ -220,6 +222,11 @@ const HotelsHotelIdRoute = HotelsHotelIdRouteImport.update({
   path: '/$hotelId',
   getParentRoute: () => HotelsRoute,
 } as any)
+const AuthenticatedAccountRoute = AuthenticatedAccountRouteImport.update({
+  id: '/_authenticated/account',
+  path: '/account',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const Char91DotwellKnownChar93OauthProtectedResourceRoute =
   Char91DotwellKnownChar93OauthProtectedResourceRouteImport.update({
     id: '/.well-known/oauth-protected-resource',
@@ -241,6 +248,11 @@ const OperatorListingsNewRoute = OperatorListingsNewRouteImport.update({
   id: '/new',
   path: '/new',
   getParentRoute: () => OperatorListingsRoute,
+} as any)
+const AuthenticatedAdminUsersRoute = AuthenticatedAdminUsersRouteImport.update({
+  id: '/_authenticated/admin/users',
+  path: '/admin/users',
+  getParentRoute: () => rootRouteImport,
 } as any)
 const Char91DotmcpChar93InvokeToolToolRoute =
   Char91DotmcpChar93InvokeToolToolRouteImport.update({
@@ -278,6 +290,7 @@ export interface FileRoutesByFullPath {
   '/wildlife': typeof WildlifeRoute
   '/.mcp/list-tools': typeof Char91DotmcpChar93ListToolsRoute
   '/.well-known/oauth-protected-resource': typeof Char91DotwellKnownChar93OauthProtectedResourceRoute
+  '/account': typeof AuthenticatedAccountRoute
   '/hotels/$hotelId': typeof HotelsHotelIdRoute
   '/operator/analytics': typeof OperatorAnalyticsRoute
   '/operator/bookings': typeof OperatorBookingsRoute
@@ -292,6 +305,7 @@ export interface FileRoutesByFullPath {
   '/operator/': typeof OperatorIndexRoute
   '/pay/': typeof PayIndexRoute
   '/.mcp/invoke-tool/$tool': typeof Char91DotmcpChar93InvokeToolToolRoute
+  '/admin/users': typeof AuthenticatedAdminUsersRoute
   '/operator/listings/new': typeof OperatorListingsNewRoute
   '/pay/checkout/$tripId': typeof PayCheckoutTripIdRoute
   '/operator/listings/$id/edit': typeof OperatorListingsIdEditRoute
@@ -318,6 +332,7 @@ export interface FileRoutesByTo {
   '/wildlife': typeof WildlifeRoute
   '/.mcp/list-tools': typeof Char91DotmcpChar93ListToolsRoute
   '/.well-known/oauth-protected-resource': typeof Char91DotwellKnownChar93OauthProtectedResourceRoute
+  '/account': typeof AuthenticatedAccountRoute
   '/hotels/$hotelId': typeof HotelsHotelIdRoute
   '/operator/analytics': typeof OperatorAnalyticsRoute
   '/operator/bookings': typeof OperatorBookingsRoute
@@ -332,6 +347,7 @@ export interface FileRoutesByTo {
   '/operator': typeof OperatorIndexRoute
   '/pay': typeof PayIndexRoute
   '/.mcp/invoke-tool/$tool': typeof Char91DotmcpChar93InvokeToolToolRoute
+  '/admin/users': typeof AuthenticatedAdminUsersRoute
   '/operator/listings/new': typeof OperatorListingsNewRoute
   '/pay/checkout/$tripId': typeof PayCheckoutTripIdRoute
   '/operator/listings/$id/edit': typeof OperatorListingsIdEditRoute
@@ -361,6 +377,7 @@ export interface FileRoutesById {
   '/wildlife': typeof WildlifeRoute
   '/.mcp/list-tools': typeof Char91DotmcpChar93ListToolsRoute
   '/.well-known/oauth-protected-resource': typeof Char91DotwellKnownChar93OauthProtectedResourceRoute
+  '/_authenticated/account': typeof AuthenticatedAccountRoute
   '/hotels/$hotelId': typeof HotelsHotelIdRoute
   '/operator/analytics': typeof OperatorAnalyticsRoute
   '/operator/bookings': typeof OperatorBookingsRoute
@@ -375,6 +392,7 @@ export interface FileRoutesById {
   '/operator/': typeof OperatorIndexRoute
   '/pay/': typeof PayIndexRoute
   '/.mcp/invoke-tool/$tool': typeof Char91DotmcpChar93InvokeToolToolRoute
+  '/_authenticated/admin/users': typeof AuthenticatedAdminUsersRoute
   '/operator/listings/new': typeof OperatorListingsNewRoute
   '/pay/checkout/$tripId': typeof PayCheckoutTripIdRoute
   '/operator/listings/$id/edit': typeof OperatorListingsIdEditRoute
@@ -405,6 +423,7 @@ export interface FileRouteTypes {
     | '/wildlife'
     | '/.mcp/list-tools'
     | '/.well-known/oauth-protected-resource'
+    | '/account'
     | '/hotels/$hotelId'
     | '/operator/analytics'
     | '/operator/bookings'
@@ -419,6 +438,7 @@ export interface FileRouteTypes {
     | '/operator/'
     | '/pay/'
     | '/.mcp/invoke-tool/$tool'
+    | '/admin/users'
     | '/operator/listings/new'
     | '/pay/checkout/$tripId'
     | '/operator/listings/$id/edit'
@@ -445,6 +465,7 @@ export interface FileRouteTypes {
     | '/wildlife'
     | '/.mcp/list-tools'
     | '/.well-known/oauth-protected-resource'
+    | '/account'
     | '/hotels/$hotelId'
     | '/operator/analytics'
     | '/operator/bookings'
@@ -459,6 +480,7 @@ export interface FileRouteTypes {
     | '/operator'
     | '/pay'
     | '/.mcp/invoke-tool/$tool'
+    | '/admin/users'
     | '/operator/listings/new'
     | '/pay/checkout/$tripId'
     | '/operator/listings/$id/edit'
@@ -487,6 +509,7 @@ export interface FileRouteTypes {
     | '/wildlife'
     | '/.mcp/list-tools'
     | '/.well-known/oauth-protected-resource'
+    | '/_authenticated/account'
     | '/hotels/$hotelId'
     | '/operator/analytics'
     | '/operator/bookings'
@@ -501,6 +524,7 @@ export interface FileRouteTypes {
     | '/operator/'
     | '/pay/'
     | '/.mcp/invoke-tool/$tool'
+    | '/_authenticated/admin/users'
     | '/operator/listings/new'
     | '/pay/checkout/$tripId'
     | '/operator/listings/$id/edit'
@@ -530,7 +554,9 @@ export interface RootRouteChildren {
   WildlifeRoute: typeof WildlifeRoute
   Char91DotmcpChar93ListToolsRoute: typeof Char91DotmcpChar93ListToolsRoute
   Char91DotwellKnownChar93OauthProtectedResourceRoute: typeof Char91DotwellKnownChar93OauthProtectedResourceRoute
+  AuthenticatedAccountRoute: typeof AuthenticatedAccountRoute
   Char91DotmcpChar93InvokeToolToolRoute: typeof Char91DotmcpChar93InvokeToolToolRoute
+  AuthenticatedAdminUsersRoute: typeof AuthenticatedAdminUsersRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -773,6 +799,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof HotelsHotelIdRouteImport
       parentRoute: typeof HotelsRoute
     }
+    '/_authenticated/account': {
+      id: '/_authenticated/account'
+      path: '/account'
+      fullPath: '/account'
+      preLoaderRoute: typeof AuthenticatedAccountRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/.well-known/oauth-protected-resource': {
       id: '/.well-known/oauth-protected-resource'
       path: '/.well-known/oauth-protected-resource'
@@ -800,6 +833,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/operator/listings/new'
       preLoaderRoute: typeof OperatorListingsNewRouteImport
       parentRoute: typeof OperatorListingsRoute
+    }
+    '/_authenticated/admin/users': {
+      id: '/_authenticated/admin/users'
+      path: '/admin/users'
+      fullPath: '/admin/users'
+      preLoaderRoute: typeof AuthenticatedAdminUsersRouteImport
+      parentRoute: typeof rootRouteImport
     }
     '/.mcp/invoke-tool/$tool': {
       id: '/.mcp/invoke-tool/$tool'
@@ -920,7 +960,9 @@ const rootRouteChildren: RootRouteChildren = {
   Char91DotmcpChar93ListToolsRoute: Char91DotmcpChar93ListToolsRoute,
   Char91DotwellKnownChar93OauthProtectedResourceRoute:
     Char91DotwellKnownChar93OauthProtectedResourceRoute,
+  AuthenticatedAccountRoute: AuthenticatedAccountRoute,
   Char91DotmcpChar93InvokeToolToolRoute: Char91DotmcpChar93InvokeToolToolRoute,
+  AuthenticatedAdminUsersRoute: AuthenticatedAdminUsersRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
