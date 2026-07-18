@@ -1,19 +1,19 @@
-// Identity Domain — Profile entity.
+// Identity Domain — Profile entity aligned with public.profiles schema.
+
+export type Preferences = Record<string, unknown>;
 
 export interface Profile {
   id: string;
   email: string | null;
   name: string | null;
-  avatar_url: string | null;
-  locale: string | null;
-  phone: string | null;
+  profile_image: string | null;
+  preferences: Preferences;
   created_at: string;
   updated_at: string;
 }
 
 export interface ProfileUpdate {
   name?: string;
-  avatar_url?: string | null;
-  locale?: string;
-  phone?: string | null;
+  profile_image?: string | null;
+  preferences?: Preferences;
 }

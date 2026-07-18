@@ -2,15 +2,15 @@
 
 import type { SupabaseClient } from "@supabase/supabase-js";
 import type { Database } from "@/integrations/supabase/types";
-import { IdentityError } from "./errors";
-import type { AppRole } from "./entities/Role";
-import type { Profile, ProfileUpdate } from "./entities/Profile";
+import { IdentityError } from "../errors";
+import type { AppRole } from "../entities/Role";
+import type { Profile, ProfileUpdate } from "../entities/Profile";
 import type {
   AuditRepository,
   ProfileRepository,
   RoleRepository,
-} from "./repositories/types";
-import { IDENTITY_EVENTS } from "./events/identityEvents";
+} from "../repositories/types";
+import { IDENTITY_EVENTS } from "../events/identityEvents";
 import { emitEvent } from "@/lib/events/eventBus.server";
 
 export interface IdentityContext {
