@@ -73,9 +73,9 @@ export function Shell({ children }: { children: React.ReactNode }) {
   }, [location.pathname]);
 
   const terminalLink =
-    primaryRole === "support"
+    primaryRole === "admin"
       ? { to: "/support", label: "Support", icon: Shield }
-      : primaryRole === "hotel"
+      : primaryRole === "operator"
       ? { to: "/partner", label: "Partner", icon: Building2 }
       : null;
 
@@ -198,18 +198,18 @@ export function Shell({ children }: { children: React.ReactNode }) {
                       </Link>
                       <Link
                         to={
-                          primaryRole === "support"
+                          primaryRole === "admin"
                             ? "/support"
-                            : primaryRole === "hotel"
+                            : primaryRole === "operator"
                             ? "/operator"
                             : "/profile"
                         }
                         className="flex items-center gap-2 px-4 py-2.5 text-sm hover:bg-foreground/5"
                       >
                         <UserIcon className="h-4 w-4" />{" "}
-                        {primaryRole === "support"
+                        {primaryRole === "admin"
                           ? "Support Console"
-                          : primaryRole === "hotel"
+                          : primaryRole === "operator"
                           ? "Operator Portal"
                           : "Profile"}
                       </Link>

@@ -33,7 +33,7 @@ function AuthPage() {
   useEffect(() => {
     if (!authLoading && user && primaryRole) {
       const dest =
-        primaryRole === "support" ? "/support" : primaryRole === "hotel" ? "/partner" : "/hotels";
+        primaryRole === "admin" ? "/support" : primaryRole === "operator" ? "/partner" : "/hotels";
       navigate({ to: dest });
     }
   }, [user, primaryRole, authLoading, navigate]);
