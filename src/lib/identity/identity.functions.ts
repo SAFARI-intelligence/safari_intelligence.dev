@@ -42,7 +42,7 @@ export const getMyProfile = createServerFn({ method: "GET" })
       const { ProfileService } = await import("@/domains/identity/services/IdentityService");
       return await ProfileService.getMe(ic);
     } catch (e) {
-      return wrap<Profile>(e);
+      return wrap(e);
     }
   });
 
@@ -55,7 +55,7 @@ export const updateMyProfile = createServerFn({ method: "POST" })
       const { ProfileService } = await import("@/domains/identity/services/IdentityService");
       return await ProfileService.updateMe(ic, data as ProfileUpdate);
     } catch (e) {
-      return wrap<Profile>(e);
+      return wrap(e);
     }
   });
 
@@ -68,7 +68,7 @@ export const listUserRoles = createServerFn({ method: "POST" })
       const { IdentityService } = await import("@/domains/identity/services/IdentityService");
       return await IdentityService.listRoles(ic, data.userId);
     } catch (e) {
-      return wrap<AppRole[]>(e);
+      return wrap(e);
     }
   });
 
@@ -82,7 +82,7 @@ export const assignRole = createServerFn({ method: "POST" })
       await IdentityService.assignRole(ic, data.userId, data.role);
       return { ok: true };
     } catch (e) {
-      return wrap<{ ok: true }>(e);
+      return wrap(e);
     }
   });
 
@@ -96,7 +96,7 @@ export const revokeRole = createServerFn({ method: "POST" })
       await IdentityService.revokeRole(ic, data.userId, data.role);
       return { ok: true };
     } catch (e) {
-      return wrap<{ ok: true }>(e);
+      return wrap(e);
     }
   });
 
@@ -110,7 +110,7 @@ export const logSignInEvent = createServerFn({ method: "POST" })
       await IdentityService.recordSignIn(ic, data.method, data.provider);
       return { ok: true };
     } catch (e) {
-      return wrap<{ ok: true }>(e);
+      return wrap(e);
     }
   });
 
@@ -125,6 +125,6 @@ export const recordEmailVerified = createServerFn({ method: "POST" })
       await IdentityService.recordVerification(ic, email);
       return { ok: true };
     } catch (e) {
-      return wrap<{ ok: true }>(e);
+      return wrap(e);
     }
   });
