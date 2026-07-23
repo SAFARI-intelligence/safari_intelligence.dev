@@ -11,17 +11,46 @@ type JournalInput = {
   bookingId?: string | null;
 };
 
-// Public: returns a shared species fact. Uses admin to read/write the shared cache row.
+// Allow-lists prevent cost-abuse and prompt-injection into the public cache.
+const ALLOWED_SPECIES = new Set([
+  'Elephant',
+  'Cheetah',
+  'Mountain Gorilla',
+  'Lion',
+  'Zebra',
+  'Giraffe',
+]);
+const ALLOWED_BEHAVIORS = new Set([
+  'Migrating',
+  'Hunting coalition',
+  'Foraging',
+  'Resting after kill',
+  'Pre-crossing assembly',
+  'Browsing',
+]);
+
+// Public: returns a shared species fact. Inputs restricted to a fixed allow-list
+// so anonymous callers cannot spam arbitrary prompts into the paid AI gateway
+// or poison the publicly-readable `wis_narratives` cache.
 export const getSpeciesFact = createServerFn({ method: 'POST' })
   .inputValidator((input: unknown) => {
     const v = input as SpeciesFactInput;
-    if (!v?.species || typeof v.species !== 'string' || v.species.length > 80) {
+    if (!v?.species || typeof v.species !== 'string') {
       throw new Error('Invalid species');
     }
-    return {
-      species: v.species.trim(),
-      behavior: typeof v.behavior === 'string' ? v.behavior.trim().slice(0, 60) : undefined,
-    };
+    const species = v.species.trim();
+    if (!ALLOWED_SPECIES.has(species)) {
+      throw new Error('Species not supported');
+    }
+    let behavior: string | undefined;
+    if (typeof v.behavior === 'string' && v.behavior.trim().length > 0) {
+      const b = v.behavior.trim();
+      if (!ALLOWED_BEHAVIORS.has(b)) {
+        throw new Error('Behavior not supported');
+      }
+      behavior = b;
+    }
+    return { species, behavior };
   })
   .handler(async ({ data }) => {
     const { supabaseAdmin } = await import('@/integrations/supabase/client.server');
@@ -55,6 +84,7 @@ export const getSpeciesFact = createServerFn({ method: 'POST' })
     });
     return { body: ai.text, cached: false };
   });
+
 
 export const listMyJournal = createServerFn({ method: 'GET' })
   .middleware([requireSupabaseAuth])
