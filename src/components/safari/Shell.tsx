@@ -23,7 +23,7 @@ const drawerLinks = [
   { to: "/wildlife", label: "Big Five Tracker" },
   { to: "/journal", label: "Safari Journal" },
   { to: "/map", label: "Interactive Map" },
-  { to: "/expansion", label: "About SAFARI" },
+  { to: "/about", label: "About SAFARI" },
   { to: "/support", label: "Contact" },
 ] as const;
 
