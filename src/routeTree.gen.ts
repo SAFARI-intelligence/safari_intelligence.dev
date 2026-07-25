@@ -9,6 +9,7 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as WisRouteImport } from './routes/wis'
 import { Route as WildlifeRouteImport } from './routes/wildlife'
 import { Route as WalletRouteImport } from './routes/wallet'
 import { Route as SupportRouteImport } from './routes/support'
@@ -54,6 +55,11 @@ import { Route as AuthenticatedAdminUsersRouteImport } from './routes/_authentic
 import { Route as Char91DotmcpChar93InvokeToolToolRouteImport } from './routes/[.mcp]/invoke-tool/$tool'
 import { Route as OperatorListingsIdEditRouteImport } from './routes/operator.listings.$id.edit'
 
+const WisRoute = WisRouteImport.update({
+  id: '/wis',
+  path: '/wis',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const WildlifeRoute = WildlifeRouteImport.update({
   id: '/wildlife',
   path: '/wildlife',
@@ -300,6 +306,7 @@ export interface FileRoutesByFullPath {
   '/support': typeof SupportRoute
   '/wallet': typeof WalletRoute
   '/wildlife': typeof WildlifeRoute
+  '/wis': typeof WisRoute
   '/.mcp/list-tools': typeof Char91DotmcpChar93ListToolsRoute
   '/.well-known/oauth-protected-resource': typeof Char91DotwellKnownChar93OauthProtectedResourceRoute
   '/account': typeof AuthenticatedAccountRoute
@@ -343,6 +350,7 @@ export interface FileRoutesByTo {
   '/support': typeof SupportRoute
   '/wallet': typeof WalletRoute
   '/wildlife': typeof WildlifeRoute
+  '/wis': typeof WisRoute
   '/.mcp/list-tools': typeof Char91DotmcpChar93ListToolsRoute
   '/.well-known/oauth-protected-resource': typeof Char91DotwellKnownChar93OauthProtectedResourceRoute
   '/account': typeof AuthenticatedAccountRoute
@@ -390,6 +398,7 @@ export interface FileRoutesById {
   '/support': typeof SupportRoute
   '/wallet': typeof WalletRoute
   '/wildlife': typeof WildlifeRoute
+  '/wis': typeof WisRoute
   '/.mcp/list-tools': typeof Char91DotmcpChar93ListToolsRoute
   '/.well-known/oauth-protected-resource': typeof Char91DotwellKnownChar93OauthProtectedResourceRoute
   '/_authenticated/account': typeof AuthenticatedAccountRoute
@@ -437,6 +446,7 @@ export interface FileRouteTypes {
     | '/support'
     | '/wallet'
     | '/wildlife'
+    | '/wis'
     | '/.mcp/list-tools'
     | '/.well-known/oauth-protected-resource'
     | '/account'
@@ -480,6 +490,7 @@ export interface FileRouteTypes {
     | '/support'
     | '/wallet'
     | '/wildlife'
+    | '/wis'
     | '/.mcp/list-tools'
     | '/.well-known/oauth-protected-resource'
     | '/account'
@@ -526,6 +537,7 @@ export interface FileRouteTypes {
     | '/support'
     | '/wallet'
     | '/wildlife'
+    | '/wis'
     | '/.mcp/list-tools'
     | '/.well-known/oauth-protected-resource'
     | '/_authenticated/account'
@@ -573,6 +585,7 @@ export interface RootRouteChildren {
   SupportRoute: typeof SupportRoute
   WalletRoute: typeof WalletRoute
   WildlifeRoute: typeof WildlifeRoute
+  WisRoute: typeof WisRoute
   Char91DotmcpChar93ListToolsRoute: typeof Char91DotmcpChar93ListToolsRoute
   Char91DotwellKnownChar93OauthProtectedResourceRoute: typeof Char91DotwellKnownChar93OauthProtectedResourceRoute
   Char91DotmcpChar93InvokeToolToolRoute: typeof Char91DotmcpChar93InvokeToolToolRoute
@@ -580,6 +593,13 @@ export interface RootRouteChildren {
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/wis': {
+      id: '/wis'
+      path: '/wis'
+      fullPath: '/wis'
+      preLoaderRoute: typeof WisRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/wildlife': {
       id: '/wildlife'
       path: '/wildlife'
@@ -1005,6 +1025,7 @@ const rootRouteChildren: RootRouteChildren = {
   SupportRoute: SupportRoute,
   WalletRoute: WalletRoute,
   WildlifeRoute: WildlifeRoute,
+  WisRoute: WisRoute,
   Char91DotmcpChar93ListToolsRoute: Char91DotmcpChar93ListToolsRoute,
   Char91DotwellKnownChar93OauthProtectedResourceRoute:
     Char91DotwellKnownChar93OauthProtectedResourceRoute,

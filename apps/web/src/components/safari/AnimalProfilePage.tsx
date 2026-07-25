@@ -430,8 +430,9 @@ export default function AnimalProfilePage({ animal = MOCK_ANIMAL }) {
             }}>Zone Tracking · 2-Hour Delay Enforced</div>
             <TrackingMapPlaceholder tier={animal.trackingTier} />
             <div style={{ marginTop: 14, fontSize: 11, color: SAFARI_TOKENS.muted, lineHeight: 1.6 }}>
-              Zone locations are generalized for wildlife safety. Exact GPS coordinates are never exposed.
-              Real-time updates available on <strong style={{ color: SAFARI_TOKENS.gold }}>Simba Pro</strong>.
+              SAFARI is a wildlife intelligence platform — zones are generalized for animal safety and
+              exact GPS is never exposed. Ranger reports refresh on a rolling 2-hour delay.
+              Faster zone refresh available on <strong style={{ color: SAFARI_TOKENS.gold }}>Simba Pro</strong>.
             </div>
           </div>
         )}
