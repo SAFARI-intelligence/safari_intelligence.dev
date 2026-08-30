@@ -129,5 +129,5 @@ export function createGovernedFn<TIn, TOut>(
         throw new Error(safeMessage(err));
       }
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    }) as any) as unknown as (opts?: { data: TIn }) => Promise<TOut>;
+    }) as any);
 }
