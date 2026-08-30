@@ -1,7 +1,10 @@
 // Identity — client-callable server functions (transport boundary).
+//
+// Every function below runs through the governance pipeline:
+// Authentication -> Authorization -> Validation -> Phase Gate -> Execution -> Audit.
 
-import { createServerFn } from "@tanstack/react-start";
-import { requireSupabaseAuth } from "@/integrations/supabase/auth-middleware";
+import { createGovernedFn } from "@/lib/governance";
+import type { GovernedContext } from "@/lib/governance";
 import {
   assignRoleSchema,
   listRolesSchema,
@@ -11,14 +14,12 @@ import {
 } from "@/domains/identity/validation/schemas";
 import type { AppRole } from "@/domains/identity/entities/Role";
 import type { Profile, ProfileUpdate } from "@/domains/identity/entities/Profile";
-import { IdentityError, toSafeMessage } from "@/domains/identity/errors";
 
-async function buildContext(ctx: { supabase: unknown; userId: string }) {
+async function buildContext(ctx: GovernedContext) {
   const { createProfileRepository, createRoleRepository, createAuditRepository } = await import(
     "@/domains/identity/repositories/supabase.server"
   );
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const supabase = ctx.supabase as any;
+  const supabase = ctx.supabase;
   return {
     actorId: ctx.userId,
     supabase,
@@ -28,103 +29,94 @@ async function buildContext(ctx: { supabase: unknown; userId: string }) {
   };
 }
 
-function wrap(err: unknown): never {
-  if (err instanceof IdentityError) throw new Error(`${err.code}: ${err.message}`);
-  console.error("[identity.functions] unexpected", err);
-  throw new Error(toSafeMessage(err));
-}
+export const getMyProfile = createGovernedFn(
+  { domain: "identity", action: "profile.read", method: "GET", auditSuccess: false },
+  async ({ ctx }): Promise<Profile> => {
+    const ic = await buildContext(ctx);
+    const { ProfileService } = await import("@/domains/identity/services/IdentityService");
+    return ProfileService.getMe(ic);
+  },
+);
 
-export const getMyProfile = createServerFn({ method: "GET" })
-  .middleware([requireSupabaseAuth])
-  .handler(async ({ context }): Promise<Profile> => {
-    try {
-      const ic = await buildContext(context);
-      const { ProfileService } = await import("@/domains/identity/services/IdentityService");
-      return await ProfileService.getMe(ic);
-    } catch (e) {
-      return wrap(e);
-    }
-  });
+export const updateMyProfile = createGovernedFn(
+  {
+    domain: "identity",
+    action: "profile.update",
+    validate: (input: unknown) => profileUpdateSchema.parse(input) as ProfileUpdate,
+  },
+  async ({ data, ctx }): Promise<Profile> => {
+    const ic = await buildContext(ctx);
+    const { ProfileService } = await import("@/domains/identity/services/IdentityService");
+    return ProfileService.updateMe(ic, data);
+  },
+);
 
-export const updateMyProfile = createServerFn({ method: "POST" })
-  .middleware([requireSupabaseAuth])
-  .inputValidator((input: unknown) => profileUpdateSchema.parse(input))
-  .handler(async ({ context, data }): Promise<Profile> => {
-    try {
-      const ic = await buildContext(context);
-      const { ProfileService } = await import("@/domains/identity/services/IdentityService");
-      return await ProfileService.updateMe(ic, data as ProfileUpdate);
-    } catch (e) {
-      return wrap(e);
-    }
-  });
+export const listUserRoles = createGovernedFn(
+  {
+    domain: "identity",
+    action: "roles.list",
+    auditSuccess: false,
+    validate: (input: unknown) => listRolesSchema.parse(input),
+  },
+  async ({ data, ctx }): Promise<AppRole[]> => {
+    const ic = await buildContext(ctx);
+    const { IdentityService } = await import("@/domains/identity/services/IdentityService");
+    return IdentityService.listRoles(ic, data.userId);
+  },
+);
 
-export const listUserRoles = createServerFn({ method: "POST" })
-  .middleware([requireSupabaseAuth])
-  .inputValidator((input: unknown) => listRolesSchema.parse(input))
-  .handler(async ({ context, data }): Promise<AppRole[]> => {
-    try {
-      const ic = await buildContext(context);
-      const { IdentityService } = await import("@/domains/identity/services/IdentityService");
-      return await IdentityService.listRoles(ic, data.userId);
-    } catch (e) {
-      return wrap(e);
-    }
-  });
+export const assignRole = createGovernedFn(
+  {
+    domain: "identity",
+    action: "roles.assign",
+    roles: ["admin"],
+    validate: (input: unknown) => assignRoleSchema.parse(input),
+  },
+  async ({ data, ctx }): Promise<{ ok: true }> => {
+    const ic = await buildContext(ctx);
+    const { IdentityService } = await import("@/domains/identity/services/IdentityService");
+    await IdentityService.assignRole(ic, data.userId, data.role);
+    return { ok: true };
+  },
+);
 
-export const assignRole = createServerFn({ method: "POST" })
-  .middleware([requireSupabaseAuth])
-  .inputValidator((input: unknown) => assignRoleSchema.parse(input))
-  .handler(async ({ context, data }): Promise<{ ok: true }> => {
-    try {
-      const ic = await buildContext(context);
-      const { IdentityService } = await import("@/domains/identity/services/IdentityService");
-      await IdentityService.assignRole(ic, data.userId, data.role);
-      return { ok: true };
-    } catch (e) {
-      return wrap(e);
-    }
-  });
+export const revokeRole = createGovernedFn(
+  {
+    domain: "identity",
+    action: "roles.revoke",
+    roles: ["admin"],
+    validate: (input: unknown) => revokeRoleSchema.parse(input),
+  },
+  async ({ data, ctx }): Promise<{ ok: true }> => {
+    const ic = await buildContext(ctx);
+    const { IdentityService } = await import("@/domains/identity/services/IdentityService");
+    await IdentityService.revokeRole(ic, data.userId, data.role);
+    return { ok: true };
+  },
+);
 
-export const revokeRole = createServerFn({ method: "POST" })
-  .middleware([requireSupabaseAuth])
-  .inputValidator((input: unknown) => revokeRoleSchema.parse(input))
-  .handler(async ({ context, data }): Promise<{ ok: true }> => {
-    try {
-      const ic = await buildContext(context);
-      const { IdentityService } = await import("@/domains/identity/services/IdentityService");
-      await IdentityService.revokeRole(ic, data.userId, data.role);
-      return { ok: true };
-    } catch (e) {
-      return wrap(e);
-    }
-  });
+export const logSignInEvent = createGovernedFn(
+  {
+    domain: "identity",
+    action: "auth.sign_in",
+    auditSuccess: false,
+    validate: (input: unknown) => signInEventSchema.parse(input),
+  },
+  async ({ data, ctx }): Promise<{ ok: true }> => {
+    const ic = await buildContext(ctx);
+    const { IdentityService } = await import("@/domains/identity/services/IdentityService");
+    await IdentityService.recordSignIn(ic, data.method, data.provider);
+    return { ok: true };
+  },
+);
 
-export const logSignInEvent = createServerFn({ method: "POST" })
-  .middleware([requireSupabaseAuth])
-  .inputValidator((input: unknown) => signInEventSchema.parse(input))
-  .handler(async ({ context, data }): Promise<{ ok: true }> => {
-    try {
-      const ic = await buildContext(context);
-      const { IdentityService } = await import("@/domains/identity/services/IdentityService");
-      await IdentityService.recordSignIn(ic, data.method, data.provider);
-      return { ok: true };
-    } catch (e) {
-      return wrap(e);
-    }
-  });
-
-export const recordEmailVerified = createServerFn({ method: "POST" })
-  .middleware([requireSupabaseAuth])
-  .handler(async ({ context }): Promise<{ ok: true }> => {
-    try {
-      const ic = await buildContext(context);
-      const { IdentityService } = await import("@/domains/identity/services/IdentityService");
-      // Best-effort email fetch from claims.
-      const email = (context.claims as { email?: string } | undefined)?.email ?? null;
-      await IdentityService.recordVerification(ic, email);
-      return { ok: true };
-    } catch (e) {
-      return wrap(e);
-    }
-  });
+export const recordEmailVerified = createGovernedFn(
+  { domain: "identity", action: "auth.verified", auditSuccess: false },
+  async ({ ctx }): Promise<{ ok: true }> => {
+    const ic = await buildContext(ctx);
+    const { IdentityService } = await import("@/domains/identity/services/IdentityService");
+    const email = (ctx.claims as { email?: string }).email ?? null;
+    await IdentityService.recordVerification(ic, email);
+    return { ok: true };
+  },
+);
