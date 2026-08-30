@@ -42,7 +42,7 @@ export function createGovernedFn<TIn, TOut>(
         throw new GovernanceError("VALIDATION", safeMessage(err));
       }
     })
-    .handler(async ({ data, context }): Promise<TOut> => {
+    .handler((async ({ data, context }: { data: unknown; context: any }): Promise<TOut> => {
       const supabase = context.supabase as unknown as SupabaseClient<Database>;
       const userId = context.userId;
       const { recordAudit, emitDomainEvent } = await import("./audit.server");
@@ -128,5 +128,6 @@ export function createGovernedFn<TIn, TOut>(
         });
         throw new Error(safeMessage(err));
       }
-    });
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    }) as any) as unknown as (opts?: { data: TIn }) => Promise<TOut>;
 }
