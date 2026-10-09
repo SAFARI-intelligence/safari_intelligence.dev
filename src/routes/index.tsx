@@ -1,13 +1,13 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
-import { Activity, MapPin, Sparkles, Cloud, ArrowRight } from "lucide-react";
+import { Activity, MapPin, Sparkles, Cloud, ArrowRight, Info } from "lucide-react";
 import { Shell } from "@/components/safari/Shell";
 import { MaasaiDivider } from "@/components/safari/MaasaiDivider";
 import { parks, images } from "@/lib/safari-data";
 
 function CountUp({ to }: { to: number }) {
-  const [n, setN] = useState(0);
+  const [n, setN] = useState(to);
   useEffect(() => {
     const dur = 1500;
     const start = performance.now();
@@ -18,6 +18,7 @@ function CountUp({ to }: { to: number }) {
       setN(Math.round(eased * to));
       if (p < 1) raf = requestAnimationFrame(tick);
     };
+    setN(0);
     raf = requestAnimationFrame(tick);
     return () => cancelAnimationFrame(raf);
   }, [to]);
@@ -30,24 +31,31 @@ export const Route = createFileRoute("/")({
       { title: "SAFARI — AI Wildlife Intelligence for East Africa" },
       {
         name: "description",
-        content:
-          "The premium AI-powered tourism platform for East Africa. Real-time wildlife intelligence across Kenya, Tanzania, Uganda & Rwanda.",
+        content: "Plan your Kenya safari with SAFARI, built in Nairobi. Wildlife stories, trusted operators, KSh pricing.",
       },
       { property: "og:title", content: "SAFARI — Wildlife Intelligence" },
       {
         property: "og:description",
-        content: "Karibu. Real-time AI wildlife tracking across East Africa.",
+        content: "Plan your Kenya safari with SAFARI, built in Nairobi. Wildlife stories, trusted operators, KSh pricing.",
+      },
+      { property: "og:type", content: "website" },
+      { property: "og:url", content: "https://wild-vista-hub.lovable.app/" },
+      { name: "twitter:card", content: "summary_large_image" },
+      {
+        name: "twitter:description",
+        content: "Plan your Kenya safari with SAFARI, built in Nairobi. Wildlife stories, trusted operators, KSh pricing.",
       },
       { property: "og:image", content: images.lion },
       { name: "twitter:image", content: images.lion },
     ],
+    links: [{ rel: "canonical", href: "https://wild-vista-hub.lovable.app/" }],
   }),
   component: Index,
 });
 
 function Index() {
   const totalSightings = 179;
-  const liveParks = 6;
+  const monitoredParks = 6;
   const avgConfidence = 94;
   const operatorsOnline = 12;
 
@@ -72,8 +80,8 @@ function Index() {
               className="max-w-2xl"
             >
               <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/15 backdrop-blur-md border border-white/20 text-white text-xs font-medium">
-                <span className="live-dot inline-block h-1.5 w-1.5 rounded-full bg-[var(--maasai)]" />
-                Wildlife Intelligence · Live now
+                <span className="inline-block h-1.5 w-1.5 rounded-full bg-[var(--maasai)]" />
+                Wildlife Intelligence · Delayed for safety
               </span>
               <h1 className="mt-5 font-display text-4xl sm:text-6xl lg:text-7xl font-bold text-white leading-[0.95]">
                 The Mara is{" "}
@@ -84,7 +92,7 @@ function Index() {
               <p className="mt-5 text-base sm:text-lg text-white/85 max-w-xl">
                 Karibu SAFARI — East Africa's intelligent tourism platform. AI tracks{" "}
                 <strong className="text-[var(--gold)]">{totalSightings} active wildlife sightings</strong>{" "}
-                across {parks.length} parks right now. Twende!
+                across {parks.length} parks. Twende!
               </p>
               <div className="mt-8 flex flex-wrap gap-3">
                 <Link
@@ -97,7 +105,7 @@ function Index() {
                   to="/wildlife"
                   className="inline-flex items-center gap-2 px-5 py-3 rounded-xl bg-white/10 backdrop-blur-md border border-white/25 text-white font-medium hover:bg-white/20 transition"
                 >
-                  See live feed <ArrowRight className="h-4 w-4" />
+                  Explore wildlife stories <ArrowRight className="h-4 w-4" />
                 </Link>
               </div>
             </motion.div>
@@ -105,11 +113,20 @@ function Index() {
         </section>
 
         {/* STATS */}
-        <section className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
+        <section aria-labelledby="sample-stats-label">
+          <div className="mb-3 flex items-center justify-between">
+            <span
+              id="sample-stats-label"
+              className="inline-flex items-center rounded-full border border-[var(--gold)]/40 bg-[var(--gold)]/10 px-2.5 py-1 text-[10px] font-semibold uppercase text-[var(--gold)]"
+            >
+              Sample data
+            </span>
+          </div>
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
           {[
             { label: "Active sightings", value: totalSightings, suffix: "", icon: Activity, color: "var(--gold)" },
             { label: "AI confidence", value: avgConfidence, suffix: "%", icon: Sparkles, color: "var(--forest)" },
-            { label: "Parks monitored", value: liveParks, suffix: "", icon: MapPin, color: "var(--maasai)" },
+            { label: "Parks monitored", value: monitoredParks, suffix: "", icon: MapPin, color: "var(--maasai)" },
             { label: "Operators online", value: operatorsOnline, suffix: "", icon: Cloud, color: "var(--charcoal)" },
           ].map((s) => (
               <div key={s.label} className="glass rounded-2xl p-4 sm:p-5">
@@ -125,6 +142,7 @@ function Index() {
                 </div>
               </div>
           ))}
+          </div>
         </section>
 
         <MaasaiDivider />
@@ -135,7 +153,7 @@ function Index() {
             <div>
               <h2 className="font-display text-3xl sm:text-4xl font-bold">Explorer Dashboard</h2>
               <p className="text-muted-foreground text-sm mt-1">
-                Real-time Wildlife Intelligence across East African parks.
+                Delayed wildlife intelligence and stories across East African parks.
               </p>
             </div>
             <Link
@@ -162,14 +180,27 @@ function Index() {
                     className="h-full w-full object-cover group-hover:scale-105 transition-transform duration-700"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
-                  <div className="absolute top-3 left-3 flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-white/15 backdrop-blur-md border border-white/25 text-white text-[11px] font-medium">
-                    {park.status === "live" && (
-                      <span className="live-dot inline-block h-1.5 w-1.5 rounded-full bg-[var(--maasai)]" />
-                    )}
-                    {park.status === "active" && (
-                      <span className="inline-block h-1.5 w-1.5 rounded-full bg-[var(--gold)]" />
-                    )}
-                    {park.status === "live" ? "LIVE" : "ACTIVE"} · {park.lastUpdate}
+                  <div className="absolute top-3 left-3 right-3 flex items-start justify-between gap-2">
+                    <div className="group/tooltip relative inline-flex">
+                      <span
+                        tabIndex={0}
+                        aria-describedby={`delay-tooltip-${park.id}`}
+                        className="inline-flex items-center gap-1.5 rounded-full border border-white/25 bg-black/35 px-2.5 py-1 text-[11px] font-medium text-white backdrop-blur-md"
+                      >
+                        <Info className="h-3 w-3" aria-hidden="true" />
+                        Updated 2h+ ago
+                      </span>
+                      <span
+                        id={`delay-tooltip-${park.id}`}
+                        role="tooltip"
+                        className="pointer-events-none absolute left-0 top-full z-20 mt-2 w-56 rounded-md bg-foreground px-3 py-2 text-xs leading-relaxed text-background opacity-0 shadow-lg transition-opacity group-hover/tooltip:opacity-100 group-focus-within/tooltip:opacity-100"
+                      >
+                        Wildlife locations are delayed by 2 hours to protect animals.
+                      </span>
+                    </div>
+                    <span className="inline-flex shrink-0 items-center rounded-full border border-[var(--gold)]/50 bg-black/35 px-2.5 py-1 text-[10px] font-semibold uppercase text-[var(--gold)] backdrop-blur-md">
+                      Sample data
+                    </span>
                   </div>
                   <div className="absolute bottom-3 left-3 right-3 text-white">
                     <div className="text-[10px] uppercase tracking-wider opacity-80">
