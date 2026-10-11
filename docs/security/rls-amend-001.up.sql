@@ -36,7 +36,6 @@ CREATE POLICY "user_roles_admin_manage" ON public.user_roles
   USING (public.has_role(auth.uid(),'admin') OR public.has_role(auth.uid(),'support'))
   WITH CHECK (public.has_role(auth.uid(),'admin') OR public.has_role(auth.uid(),'support'));
 REVOKE INSERT, UPDATE, DELETE ON public.user_roles FROM anon;
-REVOKE EXECUTE ON FUNCTION public.has_role(uuid, public.app_role) FROM anon, public;
-GRANT EXECUTE ON FUNCTION public.has_role(uuid, public.app_role) TO authenticated;
+-- NOTE: has_role stays executable by anon — the public hotels read policy calls it; revoking would break anonymous browsing.
 
 COMMIT;

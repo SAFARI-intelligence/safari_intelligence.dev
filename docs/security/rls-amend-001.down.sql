@@ -3,7 +3,6 @@ BEGIN;
 DROP POLICY IF EXISTS "user_roles_admin_manage" ON public.user_roles;
 CREATE POLICY "Support manage roles" ON public.user_roles FOR ALL TO authenticated
   USING (public.has_role(auth.uid(),'support')) WITH CHECK (public.has_role(auth.uid(),'support'));
-GRANT EXECUTE ON FUNCTION public.has_role(uuid, public.app_role) TO anon, public;
 
 DROP POLICY IF EXISTS "hotels_operator_delete_own" ON public.hotels;
 CREATE POLICY "Hotel partners delete own" ON public.hotels FOR DELETE TO authenticated
