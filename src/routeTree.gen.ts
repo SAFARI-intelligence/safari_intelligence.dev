@@ -9,155 +9,59 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
-import { Route as WisRouteImport } from './routes/wis'
-import { Route as WildlifeRouteImport } from './routes/wildlife'
-import { Route as WalletRouteImport } from './routes/wallet'
-import { Route as SupportRouteImport } from './routes/support'
-import { Route as StoriesRouteImport } from './routes/stories'
-import { Route as SimbaRouteImport } from './routes/simba'
-import { Route as ProfileRouteImport } from './routes/profile'
-import { Route as PlanRouteImport } from './routes/plan'
-import { Route as PayRouteImport } from './routes/pay'
-import { Route as PartnerRouteImport } from './routes/partner'
-import { Route as OutreachRouteImport } from './routes/outreach'
-import { Route as OperatorRouteImport } from './routes/operator'
-import { Route as McpRouteImport } from './routes/mcp'
-import { Route as MapRouteImport } from './routes/map'
-import { Route as JournalRouteImport } from './routes/journal'
-import { Route as IntelligenceRouteImport } from './routes/intelligence'
-import { Route as IconsRouteImport } from './routes/icons'
-import { Route as HotelsRouteImport } from './routes/hotels'
-import { Route as ExpansionRouteImport } from './routes/expansion'
-import { Route as BookRouteImport } from './routes/book'
-import { Route as AuthRouteImport } from './routes/auth'
-import { Route as AboutRouteImport } from './routes/about'
-import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
 import { Route as IndexRouteImport } from './routes/index'
-import { Route as PayIndexRouteImport } from './routes/pay.index'
-import { Route as OperatorIndexRouteImport } from './routes/operator.index'
-import { Route as StoriesSlugRouteImport } from './routes/stories.$slug'
-import { Route as PayWalletRouteImport } from './routes/pay.wallet'
-import { Route as PayTripsRouteImport } from './routes/pay.trips'
-import { Route as PayBookingsRouteImport } from './routes/pay.bookings'
-import { Route as OperatorWildlifeRouteImport } from './routes/operator.wildlife'
-import { Route as OperatorSettingsRouteImport } from './routes/operator.settings'
-import { Route as OperatorPayoutsRouteImport } from './routes/operator.payouts'
-import { Route as OperatorListingsRouteImport } from './routes/operator.listings'
-import { Route as OperatorBookingsRouteImport } from './routes/operator.bookings'
-import { Route as OperatorAnalyticsRouteImport } from './routes/operator.analytics'
-import { Route as HotelsHotelIdRouteImport } from './routes/hotels.$hotelId'
-import { Route as AuthenticatedAccountRouteImport } from './routes/_authenticated/account'
-import { Route as Char91DotwellKnownChar93OauthProtectedResourceRouteImport } from './routes/[.well-known]/oauth-protected-resource'
+import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
+import { Route as AboutRouteImport } from './routes/about'
+import { Route as AuthRouteImport } from './routes/auth'
+import { Route as BookRouteImport } from './routes/book'
+import { Route as ExpansionRouteImport } from './routes/expansion'
+import { Route as HotelsRouteImport } from './routes/hotels'
+import { Route as IconsRouteImport } from './routes/icons'
+import { Route as IntelligenceRouteImport } from './routes/intelligence'
+import { Route as JournalRouteImport } from './routes/journal'
+import { Route as MapRouteImport } from './routes/map'
+import { Route as McpRouteImport } from './routes/mcp'
+import { Route as OperatorRouteImport } from './routes/operator'
+import { Route as OutreachRouteImport } from './routes/outreach'
+import { Route as PartnerRouteImport } from './routes/partner'
+import { Route as PayRouteImport } from './routes/pay'
+import { Route as PlanRouteImport } from './routes/plan'
+import { Route as ProfileRouteImport } from './routes/profile'
+import { Route as SimbaRouteImport } from './routes/simba'
+import { Route as StoriesRouteImport } from './routes/stories'
+import { Route as SupportRouteImport } from './routes/support'
+import { Route as WalletRouteImport } from './routes/wallet'
+import { Route as WildlifeRouteImport } from './routes/wildlife'
+import { Route as WisRouteImport } from './routes/wis'
 import { Route as Char91DotmcpChar93ListToolsRouteImport } from './routes/[.mcp]/list-tools'
-import { Route as PayCheckoutTripIdRouteImport } from './routes/pay.checkout.$tripId'
-import { Route as OperatorListingsNewRouteImport } from './routes/operator.listings.new'
-import { Route as AuthenticatedAdminUsersRouteImport } from './routes/_authenticated/admin.users'
+import { Route as Char91DotwellKnownChar93OauthProtectedResourceRouteImport } from './routes/[.well-known]/oauth-protected-resource'
+import { Route as AuthenticatedAccountRouteImport } from './routes/_authenticated/account'
+import { Route as HotelsHotelIdRouteImport } from './routes/hotels.$hotelId'
+import { Route as OperatorIndexRouteImport } from './routes/operator.index'
+import { Route as OperatorAnalyticsRouteImport } from './routes/operator.analytics'
+import { Route as OperatorBookingsRouteImport } from './routes/operator.bookings'
+import { Route as OperatorListingsRouteImport } from './routes/operator.listings'
+import { Route as OperatorPayoutsRouteImport } from './routes/operator.payouts'
+import { Route as OperatorSettingsRouteImport } from './routes/operator.settings'
+import { Route as OperatorWildlifeRouteImport } from './routes/operator.wildlife'
+import { Route as PayIndexRouteImport } from './routes/pay.index'
+import { Route as PayBookingsRouteImport } from './routes/pay.bookings'
+import { Route as PayTripsRouteImport } from './routes/pay.trips'
+import { Route as PayWalletRouteImport } from './routes/pay.wallet'
+import { Route as StoriesSlugRouteImport } from './routes/stories.$slug'
 import { Route as Char91DotmcpChar93InvokeToolToolRouteImport } from './routes/[.mcp]/invoke-tool/$tool'
+import { Route as AuthenticatedAdminUsersRouteImport } from './routes/_authenticated/admin.users'
+import { Route as OperatorListingsNewRouteImport } from './routes/operator.listings.new'
+import { Route as PayCheckoutTripIdRouteImport } from './routes/pay.checkout.$tripId'
 import { Route as OperatorListingsIdEditRouteImport } from './routes/operator.listings.$id.edit'
 
-const WisRoute = WisRouteImport.update({
-  id: '/wis',
-  path: '/wis',
+const IndexRoute = IndexRouteImport.update({
+  id: '/',
+  path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
-const WildlifeRoute = WildlifeRouteImport.update({
-  id: '/wildlife',
-  path: '/wildlife',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const WalletRoute = WalletRouteImport.update({
-  id: '/wallet',
-  path: '/wallet',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const SupportRoute = SupportRouteImport.update({
-  id: '/support',
-  path: '/support',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const StoriesRoute = StoriesRouteImport.update({
-  id: '/stories',
-  path: '/stories',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const SimbaRoute = SimbaRouteImport.update({
-  id: '/simba',
-  path: '/simba',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ProfileRoute = ProfileRouteImport.update({
-  id: '/profile',
-  path: '/profile',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const PlanRoute = PlanRouteImport.update({
-  id: '/plan',
-  path: '/plan',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const PayRoute = PayRouteImport.update({
-  id: '/pay',
-  path: '/pay',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const PartnerRoute = PartnerRouteImport.update({
-  id: '/partner',
-  path: '/partner',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const OutreachRoute = OutreachRouteImport.update({
-  id: '/outreach',
-  path: '/outreach',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const OperatorRoute = OperatorRouteImport.update({
-  id: '/operator',
-  path: '/operator',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const McpRoute = McpRouteImport.update({
-  id: '/mcp',
-  path: '/mcp',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const MapRoute = MapRouteImport.update({
-  id: '/map',
-  path: '/map',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const JournalRoute = JournalRouteImport.update({
-  id: '/journal',
-  path: '/journal',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const IntelligenceRoute = IntelligenceRouteImport.update({
-  id: '/intelligence',
-  path: '/intelligence',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const IconsRoute = IconsRouteImport.update({
-  id: '/icons',
-  path: '/icons',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const HotelsRoute = HotelsRouteImport.update({
-  id: '/hotels',
-  path: '/hotels',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ExpansionRoute = ExpansionRouteImport.update({
-  id: '/expansion',
-  path: '/expansion',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const BookRoute = BookRouteImport.update({
-  id: '/book',
-  path: '/book',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const AuthRoute = AuthRouteImport.update({
-  id: '/auth',
-  path: '/auth',
+const AuthenticatedRouteRoute = AuthenticatedRouteRouteImport.update({
+  id: '/_authenticated',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AboutRoute = AboutRouteImport.update({
@@ -165,68 +69,136 @@ const AboutRoute = AboutRouteImport.update({
   path: '/about',
   getParentRoute: () => rootRouteImport,
 } as any)
-const AuthenticatedRouteRoute = AuthenticatedRouteRouteImport.update({
-  id: '/_authenticated',
+const AuthRoute = AuthRouteImport.update({
+  id: '/auth',
+  path: '/auth',
   getParentRoute: () => rootRouteImport,
 } as any)
-const IndexRoute = IndexRouteImport.update({
-  id: '/',
-  path: '/',
+const BookRoute = BookRouteImport.update({
+  id: '/book',
+  path: '/book',
   getParentRoute: () => rootRouteImport,
 } as any)
-const PayIndexRoute = PayIndexRouteImport.update({
-  id: '/',
-  path: '/',
-  getParentRoute: () => PayRoute,
+const ExpansionRoute = ExpansionRouteImport.update({
+  id: '/expansion',
+  path: '/expansion',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const HotelsRoute = HotelsRouteImport.update({
+  id: '/hotels',
+  path: '/hotels',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const IconsRoute = IconsRouteImport.update({
+  id: '/icons',
+  path: '/icons',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const IntelligenceRoute = IntelligenceRouteImport.update({
+  id: '/intelligence',
+  path: '/intelligence',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const JournalRoute = JournalRouteImport.update({
+  id: '/journal',
+  path: '/journal',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const MapRoute = MapRouteImport.update({
+  id: '/map',
+  path: '/map',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const McpRoute = McpRouteImport.update({
+  id: '/mcp',
+  path: '/mcp',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const OperatorRoute = OperatorRouteImport.update({
+  id: '/operator',
+  path: '/operator',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const OutreachRoute = OutreachRouteImport.update({
+  id: '/outreach',
+  path: '/outreach',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PartnerRoute = PartnerRouteImport.update({
+  id: '/partner',
+  path: '/partner',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PayRoute = PayRouteImport.update({
+  id: '/pay',
+  path: '/pay',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PlanRoute = PlanRouteImport.update({
+  id: '/plan',
+  path: '/plan',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ProfileRoute = ProfileRouteImport.update({
+  id: '/profile',
+  path: '/profile',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SimbaRoute = SimbaRouteImport.update({
+  id: '/simba',
+  path: '/simba',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const StoriesRoute = StoriesRouteImport.update({
+  id: '/stories',
+  path: '/stories',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SupportRoute = SupportRouteImport.update({
+  id: '/support',
+  path: '/support',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const WalletRoute = WalletRouteImport.update({
+  id: '/wallet',
+  path: '/wallet',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const WildlifeRoute = WildlifeRouteImport.update({
+  id: '/wildlife',
+  path: '/wildlife',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const WisRoute = WisRouteImport.update({
+  id: '/wis',
+  path: '/wis',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const Char91DotmcpChar93ListToolsRoute =
+  Char91DotmcpChar93ListToolsRouteImport.update({
+    id: '/.mcp/list-tools',
+    path: '/.mcp/list-tools',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const Char91DotwellKnownChar93OauthProtectedResourceRoute =
+  Char91DotwellKnownChar93OauthProtectedResourceRouteImport.update({
+    id: '/.well-known/oauth-protected-resource',
+    path: '/.well-known/oauth-protected-resource',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const AuthenticatedAccountRoute = AuthenticatedAccountRouteImport.update({
+  id: '/account',
+  path: '/account',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const HotelsHotelIdRoute = HotelsHotelIdRouteImport.update({
+  id: '/$hotelId',
+  path: '/$hotelId',
+  getParentRoute: () => HotelsRoute,
 } as any)
 const OperatorIndexRoute = OperatorIndexRouteImport.update({
   id: '/',
   path: '/',
-  getParentRoute: () => OperatorRoute,
-} as any)
-const StoriesSlugRoute = StoriesSlugRouteImport.update({
-  id: '/$slug',
-  path: '/$slug',
-  getParentRoute: () => StoriesRoute,
-} as any)
-const PayWalletRoute = PayWalletRouteImport.update({
-  id: '/wallet',
-  path: '/wallet',
-  getParentRoute: () => PayRoute,
-} as any)
-const PayTripsRoute = PayTripsRouteImport.update({
-  id: '/trips',
-  path: '/trips',
-  getParentRoute: () => PayRoute,
-} as any)
-const PayBookingsRoute = PayBookingsRouteImport.update({
-  id: '/bookings',
-  path: '/bookings',
-  getParentRoute: () => PayRoute,
-} as any)
-const OperatorWildlifeRoute = OperatorWildlifeRouteImport.update({
-  id: '/wildlife',
-  path: '/wildlife',
-  getParentRoute: () => OperatorRoute,
-} as any)
-const OperatorSettingsRoute = OperatorSettingsRouteImport.update({
-  id: '/settings',
-  path: '/settings',
-  getParentRoute: () => OperatorRoute,
-} as any)
-const OperatorPayoutsRoute = OperatorPayoutsRouteImport.update({
-  id: '/payouts',
-  path: '/payouts',
-  getParentRoute: () => OperatorRoute,
-} as any)
-const OperatorListingsRoute = OperatorListingsRouteImport.update({
-  id: '/listings',
-  path: '/listings',
-  getParentRoute: () => OperatorRoute,
-} as any)
-const OperatorBookingsRoute = OperatorBookingsRouteImport.update({
-  id: '/bookings',
-  path: '/bookings',
   getParentRoute: () => OperatorRoute,
 } as any)
 const OperatorAnalyticsRoute = OperatorAnalyticsRouteImport.update({
@@ -234,42 +206,55 @@ const OperatorAnalyticsRoute = OperatorAnalyticsRouteImport.update({
   path: '/analytics',
   getParentRoute: () => OperatorRoute,
 } as any)
-const HotelsHotelIdRoute = HotelsHotelIdRouteImport.update({
-  id: '/$hotelId',
-  path: '/$hotelId',
-  getParentRoute: () => HotelsRoute,
+const OperatorBookingsRoute = OperatorBookingsRouteImport.update({
+  id: '/bookings',
+  path: '/bookings',
+  getParentRoute: () => OperatorRoute,
 } as any)
-const AuthenticatedAccountRoute = AuthenticatedAccountRouteImport.update({
-  id: '/account',
-  path: '/account',
-  getParentRoute: () => AuthenticatedRouteRoute,
+const OperatorListingsRoute = OperatorListingsRouteImport.update({
+  id: '/listings',
+  path: '/listings',
+  getParentRoute: () => OperatorRoute,
 } as any)
-const Char91DotwellKnownChar93OauthProtectedResourceRoute =
-  Char91DotwellKnownChar93OauthProtectedResourceRouteImport.update({
-    id: '/.well-known/oauth-protected-resource',
-    path: '/.well-known/oauth-protected-resource',
-    getParentRoute: () => rootRouteImport,
-  } as any)
-const Char91DotmcpChar93ListToolsRoute =
-  Char91DotmcpChar93ListToolsRouteImport.update({
-    id: '/.mcp/list-tools',
-    path: '/.mcp/list-tools',
-    getParentRoute: () => rootRouteImport,
-  } as any)
-const PayCheckoutTripIdRoute = PayCheckoutTripIdRouteImport.update({
-  id: '/checkout/$tripId',
-  path: '/checkout/$tripId',
+const OperatorPayoutsRoute = OperatorPayoutsRouteImport.update({
+  id: '/payouts',
+  path: '/payouts',
+  getParentRoute: () => OperatorRoute,
+} as any)
+const OperatorSettingsRoute = OperatorSettingsRouteImport.update({
+  id: '/settings',
+  path: '/settings',
+  getParentRoute: () => OperatorRoute,
+} as any)
+const OperatorWildlifeRoute = OperatorWildlifeRouteImport.update({
+  id: '/wildlife',
+  path: '/wildlife',
+  getParentRoute: () => OperatorRoute,
+} as any)
+const PayIndexRoute = PayIndexRouteImport.update({
+  id: '/',
+  path: '/',
   getParentRoute: () => PayRoute,
 } as any)
-const OperatorListingsNewRoute = OperatorListingsNewRouteImport.update({
-  id: '/new',
-  path: '/new',
-  getParentRoute: () => OperatorListingsRoute,
+const PayBookingsRoute = PayBookingsRouteImport.update({
+  id: '/bookings',
+  path: '/bookings',
+  getParentRoute: () => PayRoute,
 } as any)
-const AuthenticatedAdminUsersRoute = AuthenticatedAdminUsersRouteImport.update({
-  id: '/admin/users',
-  path: '/admin/users',
-  getParentRoute: () => AuthenticatedRouteRoute,
+const PayTripsRoute = PayTripsRouteImport.update({
+  id: '/trips',
+  path: '/trips',
+  getParentRoute: () => PayRoute,
+} as any)
+const PayWalletRoute = PayWalletRouteImport.update({
+  id: '/wallet',
+  path: '/wallet',
+  getParentRoute: () => PayRoute,
+} as any)
+const StoriesSlugRoute = StoriesSlugRouteImport.update({
+  id: '/$slug',
+  path: '/$slug',
+  getParentRoute: () => StoriesRoute,
 } as any)
 const Char91DotmcpChar93InvokeToolToolRoute =
   Char91DotmcpChar93InvokeToolToolRouteImport.update({
@@ -277,6 +262,21 @@ const Char91DotmcpChar93InvokeToolToolRoute =
     path: '/.mcp/invoke-tool/$tool',
     getParentRoute: () => rootRouteImport,
   } as any)
+const AuthenticatedAdminUsersRoute = AuthenticatedAdminUsersRouteImport.update({
+  id: '/admin/users',
+  path: '/admin/users',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const OperatorListingsNewRoute = OperatorListingsNewRouteImport.update({
+  id: '/new',
+  path: '/new',
+  getParentRoute: () => OperatorListingsRoute,
+} as any)
+const PayCheckoutTripIdRoute = PayCheckoutTripIdRouteImport.update({
+  id: '/checkout/$tripId',
+  path: '/checkout/$tripId',
+  getParentRoute: () => PayRoute,
+} as any)
 const OperatorListingsIdEditRoute = OperatorListingsIdEditRouteImport.update({
   id: '/$id/edit',
   path: '/$id/edit',
@@ -593,158 +593,11 @@ export interface RootRouteChildren {
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/wis': {
-      id: '/wis'
-      path: '/wis'
-      fullPath: '/wis'
-      preLoaderRoute: typeof WisRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/wildlife': {
-      id: '/wildlife'
-      path: '/wildlife'
-      fullPath: '/wildlife'
-      preLoaderRoute: typeof WildlifeRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/wallet': {
-      id: '/wallet'
-      path: '/wallet'
-      fullPath: '/wallet'
-      preLoaderRoute: typeof WalletRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/support': {
-      id: '/support'
-      path: '/support'
-      fullPath: '/support'
-      preLoaderRoute: typeof SupportRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/stories': {
-      id: '/stories'
-      path: '/stories'
-      fullPath: '/stories'
-      preLoaderRoute: typeof StoriesRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/simba': {
-      id: '/simba'
-      path: '/simba'
-      fullPath: '/simba'
-      preLoaderRoute: typeof SimbaRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/profile': {
-      id: '/profile'
-      path: '/profile'
-      fullPath: '/profile'
-      preLoaderRoute: typeof ProfileRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/plan': {
-      id: '/plan'
-      path: '/plan'
-      fullPath: '/plan'
-      preLoaderRoute: typeof PlanRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/pay': {
-      id: '/pay'
-      path: '/pay'
-      fullPath: '/pay'
-      preLoaderRoute: typeof PayRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/partner': {
-      id: '/partner'
-      path: '/partner'
-      fullPath: '/partner'
-      preLoaderRoute: typeof PartnerRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/outreach': {
-      id: '/outreach'
-      path: '/outreach'
-      fullPath: '/outreach'
-      preLoaderRoute: typeof OutreachRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/operator': {
-      id: '/operator'
-      path: '/operator'
-      fullPath: '/operator'
-      preLoaderRoute: typeof OperatorRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/mcp': {
-      id: '/mcp'
-      path: '/mcp'
-      fullPath: '/mcp'
-      preLoaderRoute: typeof McpRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/map': {
-      id: '/map'
-      path: '/map'
-      fullPath: '/map'
-      preLoaderRoute: typeof MapRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/journal': {
-      id: '/journal'
-      path: '/journal'
-      fullPath: '/journal'
-      preLoaderRoute: typeof JournalRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/intelligence': {
-      id: '/intelligence'
-      path: '/intelligence'
-      fullPath: '/intelligence'
-      preLoaderRoute: typeof IntelligenceRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/icons': {
-      id: '/icons'
-      path: '/icons'
-      fullPath: '/icons'
-      preLoaderRoute: typeof IconsRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/hotels': {
-      id: '/hotels'
-      path: '/hotels'
-      fullPath: '/hotels'
-      preLoaderRoute: typeof HotelsRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/expansion': {
-      id: '/expansion'
-      path: '/expansion'
-      fullPath: '/expansion'
-      preLoaderRoute: typeof ExpansionRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/book': {
-      id: '/book'
-      path: '/book'
-      fullPath: '/book'
-      preLoaderRoute: typeof BookRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/auth': {
-      id: '/auth'
-      path: '/auth'
-      fullPath: '/auth'
-      preLoaderRoute: typeof AuthRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/about': {
-      id: '/about'
-      path: '/about'
-      fullPath: '/about'
-      preLoaderRoute: typeof AboutRouteImport
+    '/': {
+      id: '/'
+      path: '/'
+      fullPath: '/'
+      preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/_authenticated': {
@@ -754,116 +607,158 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedRouteRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/': {
-      id: '/'
-      path: '/'
-      fullPath: '/'
-      preLoaderRoute: typeof IndexRouteImport
+    '/about': {
+      id: '/about'
+      path: '/about'
+      fullPath: '/about'
+      preLoaderRoute: typeof AboutRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/pay/': {
-      id: '/pay/'
-      path: '/'
-      fullPath: '/pay/'
-      preLoaderRoute: typeof PayIndexRouteImport
-      parentRoute: typeof PayRoute
+    '/auth': {
+      id: '/auth'
+      path: '/auth'
+      fullPath: '/auth'
+      preLoaderRoute: typeof AuthRouteImport
+      parentRoute: typeof rootRouteImport
     }
-    '/operator/': {
-      id: '/operator/'
-      path: '/'
-      fullPath: '/operator/'
-      preLoaderRoute: typeof OperatorIndexRouteImport
-      parentRoute: typeof OperatorRoute
+    '/book': {
+      id: '/book'
+      path: '/book'
+      fullPath: '/book'
+      preLoaderRoute: typeof BookRouteImport
+      parentRoute: typeof rootRouteImport
     }
-    '/stories/$slug': {
-      id: '/stories/$slug'
-      path: '/$slug'
-      fullPath: '/stories/$slug'
-      preLoaderRoute: typeof StoriesSlugRouteImport
-      parentRoute: typeof StoriesRoute
+    '/expansion': {
+      id: '/expansion'
+      path: '/expansion'
+      fullPath: '/expansion'
+      preLoaderRoute: typeof ExpansionRouteImport
+      parentRoute: typeof rootRouteImport
     }
-    '/pay/wallet': {
-      id: '/pay/wallet'
+    '/hotels': {
+      id: '/hotels'
+      path: '/hotels'
+      fullPath: '/hotels'
+      preLoaderRoute: typeof HotelsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/icons': {
+      id: '/icons'
+      path: '/icons'
+      fullPath: '/icons'
+      preLoaderRoute: typeof IconsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/intelligence': {
+      id: '/intelligence'
+      path: '/intelligence'
+      fullPath: '/intelligence'
+      preLoaderRoute: typeof IntelligenceRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/journal': {
+      id: '/journal'
+      path: '/journal'
+      fullPath: '/journal'
+      preLoaderRoute: typeof JournalRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/map': {
+      id: '/map'
+      path: '/map'
+      fullPath: '/map'
+      preLoaderRoute: typeof MapRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/mcp': {
+      id: '/mcp'
+      path: '/mcp'
+      fullPath: '/mcp'
+      preLoaderRoute: typeof McpRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/operator': {
+      id: '/operator'
+      path: '/operator'
+      fullPath: '/operator'
+      preLoaderRoute: typeof OperatorRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/outreach': {
+      id: '/outreach'
+      path: '/outreach'
+      fullPath: '/outreach'
+      preLoaderRoute: typeof OutreachRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/partner': {
+      id: '/partner'
+      path: '/partner'
+      fullPath: '/partner'
+      preLoaderRoute: typeof PartnerRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/pay': {
+      id: '/pay'
+      path: '/pay'
+      fullPath: '/pay'
+      preLoaderRoute: typeof PayRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/plan': {
+      id: '/plan'
+      path: '/plan'
+      fullPath: '/plan'
+      preLoaderRoute: typeof PlanRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/profile': {
+      id: '/profile'
+      path: '/profile'
+      fullPath: '/profile'
+      preLoaderRoute: typeof ProfileRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/simba': {
+      id: '/simba'
+      path: '/simba'
+      fullPath: '/simba'
+      preLoaderRoute: typeof SimbaRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/stories': {
+      id: '/stories'
+      path: '/stories'
+      fullPath: '/stories'
+      preLoaderRoute: typeof StoriesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/support': {
+      id: '/support'
+      path: '/support'
+      fullPath: '/support'
+      preLoaderRoute: typeof SupportRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/wallet': {
+      id: '/wallet'
       path: '/wallet'
-      fullPath: '/pay/wallet'
-      preLoaderRoute: typeof PayWalletRouteImport
-      parentRoute: typeof PayRoute
+      fullPath: '/wallet'
+      preLoaderRoute: typeof WalletRouteImport
+      parentRoute: typeof rootRouteImport
     }
-    '/pay/trips': {
-      id: '/pay/trips'
-      path: '/trips'
-      fullPath: '/pay/trips'
-      preLoaderRoute: typeof PayTripsRouteImport
-      parentRoute: typeof PayRoute
-    }
-    '/pay/bookings': {
-      id: '/pay/bookings'
-      path: '/bookings'
-      fullPath: '/pay/bookings'
-      preLoaderRoute: typeof PayBookingsRouteImport
-      parentRoute: typeof PayRoute
-    }
-    '/operator/wildlife': {
-      id: '/operator/wildlife'
+    '/wildlife': {
+      id: '/wildlife'
       path: '/wildlife'
-      fullPath: '/operator/wildlife'
-      preLoaderRoute: typeof OperatorWildlifeRouteImport
-      parentRoute: typeof OperatorRoute
+      fullPath: '/wildlife'
+      preLoaderRoute: typeof WildlifeRouteImport
+      parentRoute: typeof rootRouteImport
     }
-    '/operator/settings': {
-      id: '/operator/settings'
-      path: '/settings'
-      fullPath: '/operator/settings'
-      preLoaderRoute: typeof OperatorSettingsRouteImport
-      parentRoute: typeof OperatorRoute
-    }
-    '/operator/payouts': {
-      id: '/operator/payouts'
-      path: '/payouts'
-      fullPath: '/operator/payouts'
-      preLoaderRoute: typeof OperatorPayoutsRouteImport
-      parentRoute: typeof OperatorRoute
-    }
-    '/operator/listings': {
-      id: '/operator/listings'
-      path: '/listings'
-      fullPath: '/operator/listings'
-      preLoaderRoute: typeof OperatorListingsRouteImport
-      parentRoute: typeof OperatorRoute
-    }
-    '/operator/bookings': {
-      id: '/operator/bookings'
-      path: '/bookings'
-      fullPath: '/operator/bookings'
-      preLoaderRoute: typeof OperatorBookingsRouteImport
-      parentRoute: typeof OperatorRoute
-    }
-    '/operator/analytics': {
-      id: '/operator/analytics'
-      path: '/analytics'
-      fullPath: '/operator/analytics'
-      preLoaderRoute: typeof OperatorAnalyticsRouteImport
-      parentRoute: typeof OperatorRoute
-    }
-    '/hotels/$hotelId': {
-      id: '/hotels/$hotelId'
-      path: '/$hotelId'
-      fullPath: '/hotels/$hotelId'
-      preLoaderRoute: typeof HotelsHotelIdRouteImport
-      parentRoute: typeof HotelsRoute
-    }
-    '/_authenticated/account': {
-      id: '/_authenticated/account'
-      path: '/account'
-      fullPath: '/account'
-      preLoaderRoute: typeof AuthenticatedAccountRouteImport
-      parentRoute: typeof AuthenticatedRouteRoute
-    }
-    '/.well-known/oauth-protected-resource': {
-      id: '/.well-known/oauth-protected-resource'
-      path: '/.well-known/oauth-protected-resource'
-      fullPath: '/.well-known/oauth-protected-resource'
-      preLoaderRoute: typeof Char91DotwellKnownChar93OauthProtectedResourceRouteImport
+    '/wis': {
+      id: '/wis'
+      path: '/wis'
+      fullPath: '/wis'
+      preLoaderRoute: typeof WisRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/.mcp/list-tools': {
@@ -873,19 +768,117 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof Char91DotmcpChar93ListToolsRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/pay/checkout/$tripId': {
-      id: '/pay/checkout/$tripId'
-      path: '/checkout/$tripId'
-      fullPath: '/pay/checkout/$tripId'
-      preLoaderRoute: typeof PayCheckoutTripIdRouteImport
+    '/.well-known/oauth-protected-resource': {
+      id: '/.well-known/oauth-protected-resource'
+      path: '/.well-known/oauth-protected-resource'
+      fullPath: '/.well-known/oauth-protected-resource'
+      preLoaderRoute: typeof Char91DotwellKnownChar93OauthProtectedResourceRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/_authenticated/account': {
+      id: '/_authenticated/account'
+      path: '/account'
+      fullPath: '/account'
+      preLoaderRoute: typeof AuthenticatedAccountRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/hotels/$hotelId': {
+      id: '/hotels/$hotelId'
+      path: '/$hotelId'
+      fullPath: '/hotels/$hotelId'
+      preLoaderRoute: typeof HotelsHotelIdRouteImport
+      parentRoute: typeof HotelsRoute
+    }
+    '/operator/': {
+      id: '/operator/'
+      path: '/'
+      fullPath: '/operator/'
+      preLoaderRoute: typeof OperatorIndexRouteImport
+      parentRoute: typeof OperatorRoute
+    }
+    '/operator/analytics': {
+      id: '/operator/analytics'
+      path: '/analytics'
+      fullPath: '/operator/analytics'
+      preLoaderRoute: typeof OperatorAnalyticsRouteImport
+      parentRoute: typeof OperatorRoute
+    }
+    '/operator/bookings': {
+      id: '/operator/bookings'
+      path: '/bookings'
+      fullPath: '/operator/bookings'
+      preLoaderRoute: typeof OperatorBookingsRouteImport
+      parentRoute: typeof OperatorRoute
+    }
+    '/operator/listings': {
+      id: '/operator/listings'
+      path: '/listings'
+      fullPath: '/operator/listings'
+      preLoaderRoute: typeof OperatorListingsRouteImport
+      parentRoute: typeof OperatorRoute
+    }
+    '/operator/payouts': {
+      id: '/operator/payouts'
+      path: '/payouts'
+      fullPath: '/operator/payouts'
+      preLoaderRoute: typeof OperatorPayoutsRouteImport
+      parentRoute: typeof OperatorRoute
+    }
+    '/operator/settings': {
+      id: '/operator/settings'
+      path: '/settings'
+      fullPath: '/operator/settings'
+      preLoaderRoute: typeof OperatorSettingsRouteImport
+      parentRoute: typeof OperatorRoute
+    }
+    '/operator/wildlife': {
+      id: '/operator/wildlife'
+      path: '/wildlife'
+      fullPath: '/operator/wildlife'
+      preLoaderRoute: typeof OperatorWildlifeRouteImport
+      parentRoute: typeof OperatorRoute
+    }
+    '/pay/': {
+      id: '/pay/'
+      path: '/'
+      fullPath: '/pay/'
+      preLoaderRoute: typeof PayIndexRouteImport
       parentRoute: typeof PayRoute
     }
-    '/operator/listings/new': {
-      id: '/operator/listings/new'
-      path: '/new'
-      fullPath: '/operator/listings/new'
-      preLoaderRoute: typeof OperatorListingsNewRouteImport
-      parentRoute: typeof OperatorListingsRoute
+    '/pay/bookings': {
+      id: '/pay/bookings'
+      path: '/bookings'
+      fullPath: '/pay/bookings'
+      preLoaderRoute: typeof PayBookingsRouteImport
+      parentRoute: typeof PayRoute
+    }
+    '/pay/trips': {
+      id: '/pay/trips'
+      path: '/trips'
+      fullPath: '/pay/trips'
+      preLoaderRoute: typeof PayTripsRouteImport
+      parentRoute: typeof PayRoute
+    }
+    '/pay/wallet': {
+      id: '/pay/wallet'
+      path: '/wallet'
+      fullPath: '/pay/wallet'
+      preLoaderRoute: typeof PayWalletRouteImport
+      parentRoute: typeof PayRoute
+    }
+    '/stories/$slug': {
+      id: '/stories/$slug'
+      path: '/$slug'
+      fullPath: '/stories/$slug'
+      preLoaderRoute: typeof StoriesSlugRouteImport
+      parentRoute: typeof StoriesRoute
+    }
+    '/.mcp/invoke-tool/$tool': {
+      id: '/.mcp/invoke-tool/$tool'
+      path: '/.mcp/invoke-tool/$tool'
+      fullPath: '/.mcp/invoke-tool/$tool'
+      preLoaderRoute: typeof Char91DotmcpChar93InvokeToolToolRouteImport
+      parentRoute: typeof rootRouteImport
     }
     '/_authenticated/admin/users': {
       id: '/_authenticated/admin/users'
@@ -894,12 +887,19 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedAdminUsersRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
-    '/.mcp/invoke-tool/$tool': {
-      id: '/.mcp/invoke-tool/$tool'
-      path: '/.mcp/invoke-tool/$tool'
-      fullPath: '/.mcp/invoke-tool/$tool'
-      preLoaderRoute: typeof Char91DotmcpChar93InvokeToolToolRouteImport
-      parentRoute: typeof rootRouteImport
+    '/operator/listings/new': {
+      id: '/operator/listings/new'
+      path: '/new'
+      fullPath: '/operator/listings/new'
+      preLoaderRoute: typeof OperatorListingsNewRouteImport
+      parentRoute: typeof OperatorListingsRoute
+    }
+    '/pay/checkout/$tripId': {
+      id: '/pay/checkout/$tripId'
+      path: '/checkout/$tripId'
+      fullPath: '/pay/checkout/$tripId'
+      preLoaderRoute: typeof PayCheckoutTripIdRouteImport
+      parentRoute: typeof PayRoute
     }
     '/operator/listings/$id/edit': {
       id: '/operator/listings/$id/edit'

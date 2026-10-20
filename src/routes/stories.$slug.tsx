@@ -39,7 +39,7 @@ export const Route = createFileRoute("/stories/$slug")({
         <div className="mx-auto max-w-2xl glass-strong rounded-3xl p-10 text-center">
           <AlertTriangle className="mx-auto h-8 w-8 text-[var(--maasai)]" />
           <h2 className="font-display text-2xl font-bold mt-3">Something went wrong</h2>
-          <p className="text-sm text-muted-foreground mt-2">{error.message}</p>
+          <p className="text-sm text-muted-foreground mt-2">{error instanceof Error ? error.message : "An unexpected error occurred. Please try again."}</p>
           <button
             onClick={() => {
               router.invalidate();
