@@ -18,7 +18,7 @@ export const Route = createFileRoute("/hotels/$hotelId")({
   errorComponent: ({ error }) => (
     <Shell>
       <div className="mx-auto max-w-md text-center py-12">
-        <p className="text-sm text-muted-foreground">{error.message}</p>
+        <p className="text-sm text-muted-foreground">{error instanceof Error ? error.message : "An unexpected error occurred. Please try again."}</p>
         <Link to="/hotels" className="underline text-sm">Back to hotels</Link>
       </div>
     </Shell>
