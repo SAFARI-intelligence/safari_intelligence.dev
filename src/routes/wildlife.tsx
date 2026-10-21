@@ -16,7 +16,7 @@ export const Route = createFileRoute("/wildlife")({
       {
         name: "description",
         content:
-          "AI-generated wildlife narratives across East Africa. Real sightings, real-time. B2B-ready API.",
+          "AI-generated wildlife narratives across East Africa. Sample stories with locations delayed 2 hours to protect animals.",
       },
       { property: "og:title", content: "Wildlife Story Feed — SAFARI" },
       {
@@ -81,14 +81,14 @@ function WildlifePage() {
         <header className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4">
           <div>
             <span className="text-xs uppercase tracking-[0.18em] text-[var(--maasai)] font-semibold">
-              Wanyama · Live narratives
+              Wanyama · Sample stories
             </span>
             <h1 className="font-display text-4xl sm:text-5xl font-bold mt-2">
               Wildlife Story Feed
             </h1>
             <p className="text-muted-foreground mt-2 max-w-2xl">
               AI-generated stories from rangers, camera traps, and operator radios across the
-              region — refined every 90 seconds.
+              region. Sample data — locations are delayed by 2 hours.
             </p>
           </div>
         </header>
@@ -113,7 +113,7 @@ function WildlifePage() {
         <WildIntelModules />
 
 
-        <div className="grid lg:grid-cols-[1fr_400px] gap-6 min-w-0">
+        <div className="grid grid-cols-1 lg:grid-cols-[minmax(0,1fr)_400px] gap-6 min-w-0">
           {/* timeline */}
           <div className="space-y-4 min-w-0">
             {filtered.map((s, i) => (
@@ -161,7 +161,7 @@ function WildlifePage() {
           </div>
 
           {/* B2B API panel */}
-          <aside className="lg:sticky lg:top-28 lg:self-start space-y-4">
+          <aside className="min-w-0 lg:sticky lg:top-28 lg:self-start space-y-4">
             <div className="glass-strong rounded-2xl p-5">
               <div className="flex items-center gap-2 mb-1">
                 <Code className="h-4 w-4 text-[var(--gold)]" />
@@ -169,9 +169,9 @@ function WildlifePage() {
                   B2B API
                 </span>
               </div>
-              <h3 className="font-display text-xl font-bold mb-3">Live JSON payload</h3>
+              <h3 className="font-display text-xl font-bold mb-3">Sample JSON payload</h3>
               <p className="text-xs text-muted-foreground mb-3">
-                Every sighting is exposed via REST + webhooks. Operators integrate in minutes.
+                Example of the data shape partners could receive. Not a public API yet.
               </p>
               <div className="relative">
                 <pre className="bg-foreground text-background/90 rounded-xl p-3 text-[10.5px] leading-snug overflow-x-auto max-h-72 font-mono">
@@ -191,7 +191,7 @@ function WildlifePage() {
               </div>
               <pre className="bg-secondary rounded-lg p-3 text-[10.5px] font-mono overflow-x-auto">
 {`curl -H "Authorization: Bearer sk_safari_..." \\
-  https://api.safari-os.africa/v1/sightings`}
+  https://api.example.com/v1/sightings`}
               </pre>
             </div>
 
