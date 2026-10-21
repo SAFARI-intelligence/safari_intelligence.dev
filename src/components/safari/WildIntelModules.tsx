@@ -315,8 +315,8 @@ function DelayBanner() {
           2-hour delay enforced.
         </span>{" "}
         All positions shown are zone-centroid and at least 2 hours old — a
-        conservation rule that protects animals from real-time tracking. "Latest
-        Update" never means live.
+        conservation rule that protects animals from precise tracking. "Latest
+        Update" always means at least 2 hours old.
       </div>
     </div>
   );
