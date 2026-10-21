@@ -16,6 +16,9 @@ const buttonVariants = cva(
         secondary: "bg-secondary text-secondary-foreground shadow-sm hover:bg-secondary/80",
         ghost: "hover:bg-accent hover:text-accent-foreground",
         link: "text-primary underline-offset-4 hover:underline",
+        safari: "bg-scene-accent text-ink shadow-sm hover:bg-scene-accent/90",
+        scene: "border border-scene-foreground/35 bg-scene/25 text-scene-foreground hover:bg-scene-foreground/15",
+        navigation: "text-brand-nav-foreground hover:bg-brand-nav-foreground/10 hover:text-scene-accent",
       },
       size: {
         default: "h-9 px-4 py-2",

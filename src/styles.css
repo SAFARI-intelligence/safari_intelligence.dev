@@ -52,6 +52,13 @@
   --color-ivory: var(--ivory);
   --color-savanna: var(--savanna);
   --color-charcoal: var(--charcoal);
+  --color-scene: var(--scene);
+  --color-scene-foreground: var(--scene-foreground);
+  --color-scene-muted: var(--scene-muted);
+  --color-scene-accent: var(--scene-accent);
+  --color-ink: var(--ink);
+  --color-brand-nav: var(--brand-nav);
+  --color-brand-nav-foreground: var(--brand-nav-foreground);
 
   --color-chart-1: var(--chart-1);
   --color-chart-2: var(--chart-2);
@@ -69,11 +76,20 @@
   --color-sidebar-ring: var(--sidebar-ring);
 
   --font-display: "Playfair Display", "Cormorant Garamond", Georgia, serif;
-  --font-sans: "Inter", system-ui, sans-serif;
+  --font-sans: "DM Sans", system-ui, sans-serif;
 }
 
 :root {
   --radius: 0.875rem;
+  --ink: oklch(0.16 0.015 60);
+  --scene: oklch(0.16 0.015 60);
+  --scene-foreground: oklch(0.98 0.015 85);
+  --scene-muted: oklch(0.86 0.02 85);
+  --scene-accent: oklch(0.82 0.13 80);
+  --brand-nav: oklch(0.16 0.015 60);
+  --brand-nav-foreground: oklch(0.98 0.015 85);
+  --gradient-photo: linear-gradient(90deg, oklch(0.12 0.01 60 / 0.88), oklch(0.12 0.01 60 / 0.55) 48%, oklch(0.12 0.01 60 / 0.05));
+  --gradient-photo-bottom: linear-gradient(0deg, oklch(0.12 0.01 60 / 0.9), transparent 85%);
 
   /* Savanna ivory background, deep charcoal foreground */
   --background: oklch(0.985 0.012 85);
@@ -296,7 +312,7 @@
   h3,
   .font-display {
     font-family: var(--font-display);
-    letter-spacing: -0.02em;
+    letter-spacing: 0;
   }
 }
 
@@ -615,3 +631,21 @@
 .op-score-good { color: var(--op-green); }
 .op-score-warn { color: #b07a1a; }
 .op-score-bad { color: var(--op-red); }
+
+/* Public editorial surfaces reuse the shared palette without changing portals. */
+.public-home { background: var(--background); }
+.safari-photo-shade { background: var(--gradient-photo); }
+.safari-photo-bottom { background: var(--gradient-photo-bottom); }
+.safari-hero { min-height: 560px; }
+.safari-hero-image { object-position: 72% 45%; }
+.public-home .editorial-label { letter-spacing: 0; }
+.public-home details > summary::-webkit-details-marker { display: none; }
+.safari-footer { padding-bottom: max(6rem, env(safe-area-inset-bottom)); }
+@media (min-width: 768px) { .safari-footer { padding-bottom: 2rem; } }
+@media (max-width: 639px) {
+  .safari-hero { min-height: 530px; }
+  .safari-photo-shade { background: linear-gradient(90deg, var(--scene), color-mix(in oklab, var(--scene) 70%, transparent) 65%, color-mix(in oklab, var(--scene) 40%, transparent)); }
+}
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; scroll-behavior: auto !important; }
+}
