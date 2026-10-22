@@ -1,5 +1,15 @@
 # SAFARI execution — 21 October 2026
 
+## Tri-role access control — 22 October 2026
+
+- [x] RoleGuard enforces auth + roles (deny by default, redirect anonymous to /auth).
+- [x] /operator and /support admin-only; /partner operator; /journal, /pay, /profile tourist.
+- [x] Signup role selector removed; database trigger now always grants tourist at signup.
+- [x] RLS hardened: ownership WITH CHECK on hotels/bookings updates; policies accept legacy + modern role names; role writes admin-restricted.
+- [x] Tests (11 passed), typecheck clean, browser checks: anonymous redirected, operator blocked from admin routes, partner dashboard reachable, public listings open, zero page errors.
+- [ ] End-to-end admin-path check blocked: no admin-role account exists in the database; /operator admin access verified by code review and tests only.
+
+
 - [ ] Polish the existing public landing page with honest content and working feature links.
 - [ ] Audit existing routes and fix verified presentation/navigation defects without structural refactors.
 - [ ] Verify desktop/mobile rendering, navigation, runtime signals, and relevant existing tests.
