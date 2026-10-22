@@ -12,7 +12,7 @@ export const Route = createFileRoute("/operator")({
     ],
   }),
   component: () => (
-    <RoleGuard allow={["hotel"]}>
+    <RoleGuard allow={["admin"]}>
       <OperatorShell>
         <Outlet />
       </OperatorShell>

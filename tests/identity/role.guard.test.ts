@@ -28,11 +28,22 @@ describe("Role guards", () => {
     expect(normalizeRole("bogus")).toBeNull();
   });
 
-  it("dedupes normalized role lists", () => {
-    expect(normalizeRoles(["user", "tourist", "hotel", "operator"])).toEqual([
-      "tourist",
-      "operator",
-    ]);
+});
+
+describe("Tri-role route guards", () => {
+  it("maps legacy route allow-lists to modern roles", () => {
+    // /partner historically allowed legacy "hotel"; /support allowed "support".
+    expect(normalizeRoles(["hotel"])).toEqual(["operator"]);
+    expect(normalizeRoles(["support"])).toEqual(["admin"]);
+    expect(normalizeRoles(["user"])).toEqual(["tourist"]);
+  });
+
+  it("resolves admin as the platform super-role", () => {
+    expect(normalizeRoles(["admin"])).toContain("admin");
+  });
+
+  it("denies unknown roles by default", () => {
+    expect(normalizeRoles(["guest", ""])).toEqual([]);
   });
 });
 

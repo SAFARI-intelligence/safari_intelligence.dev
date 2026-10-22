@@ -4,7 +4,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { lovable } from "@/integrations/lovable";
 import { useAuth } from "@/lib/auth";
 import { Shell } from "@/components/safari/Shell";
-import { Loader2, User as UserIcon, Building2, Sparkles } from "lucide-react";
+import { Loader2, Sparkles } from "lucide-react";
 
 export const Route = createFileRoute("/auth")({
   head: () => ({
@@ -17,13 +17,11 @@ export const Route = createFileRoute("/auth")({
 });
 
 type Mode = "signin" | "signup";
-type Role = "user" | "hotel";
 
 function AuthPage() {
   const navigate = useNavigate();
   const { user, primaryRole, loading: authLoading } = useAuth();
   const [mode, setMode] = useState<Mode>("signin");
-  const [role, setRole] = useState<Role>("user");
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -50,7 +48,7 @@ function AuthPage() {
           password,
           options: {
             emailRedirectTo: redirectUrl,
-            data: { name, role },
+            data: { name },
           },
         });
         if (error) throw error;
@@ -102,41 +100,6 @@ function AuthPage() {
             </button>
           </div>
 
-          {mode === "signup" && (
-            <div className="mb-4">
-              <label className="text-xs font-medium text-muted-foreground mb-2 block">
-                I am joining as
-              </label>
-              <div className="grid grid-cols-2 gap-2">
-                <button
-                  type="button"
-                  onClick={() => setRole("user")}
-                  className={`p-3 rounded-xl border text-left transition ${
-                    role === "user"
-                      ? "border-[var(--gold)] bg-[var(--gold)]/10"
-                      : "border-border/60 hover:bg-foreground/5"
-                  }`}
-                >
-                  <UserIcon className="h-4 w-4 mb-1.5" />
-                  <div className="text-sm font-semibold">Traveler</div>
-                  <div className="text-[10px] text-muted-foreground">Browse & book</div>
-                </button>
-                <button
-                  type="button"
-                  onClick={() => setRole("hotel")}
-                  className={`p-3 rounded-xl border text-left transition ${
-                    role === "hotel"
-                      ? "border-[var(--maasai)] bg-[var(--maasai)]/10"
-                      : "border-border/60 hover:bg-foreground/5"
-                  }`}
-                >
-                  <Building2 className="h-4 w-4 mb-1.5" />
-                  <div className="text-sm font-semibold">Hotel partner</div>
-                  <div className="text-[10px] text-muted-foreground">List & manage</div>
-                </button>
-              </div>
-            </div>
-          )}
 
           <form onSubmit={submit} className="space-y-3">
             {mode === "signup" && (
