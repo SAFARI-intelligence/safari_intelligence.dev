@@ -14,7 +14,7 @@ export const Route = createFileRoute("/pay")({
     ],
   }),
   component: () => (
-    <RoleGuard allow={["user", "hotel", "support"]}>
+    <RoleGuard allow={["tourist"]}>
       <PayShell>
         <Outlet />
       </PayShell>

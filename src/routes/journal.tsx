@@ -21,7 +21,7 @@ export const Route = createFileRoute("/journal")({
     ],
   }),
   component: () => (
-    <RoleGuard allow={["user"]}>
+    <RoleGuard allow={["tourist"]}>
       <JournalPage />
     </RoleGuard>
   ),

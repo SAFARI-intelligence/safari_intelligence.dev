@@ -14,7 +14,7 @@ export const Route = createFileRoute("/partner")({
     ],
   }),
   component: () => (
-    <RoleGuard allow={["hotel"]}>
+    <RoleGuard allow={["operator"]}>
       <PartnerDashboard />
     </RoleGuard>
   ),

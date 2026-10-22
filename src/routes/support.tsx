@@ -13,7 +13,7 @@ export const Route = createFileRoute("/support")({
     ],
   }),
   component: () => (
-    <RoleGuard allow={["support"]}>
+    <RoleGuard allow={["admin"]}>
       <SupportConsole />
     </RoleGuard>
   ),
