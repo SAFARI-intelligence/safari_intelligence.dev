@@ -7,7 +7,7 @@
 - [x] Signup role selector removed; database trigger now always grants tourist at signup.
 - [x] RLS hardened: ownership WITH CHECK on hotels/bookings updates; policies accept legacy + modern role names; role writes admin-restricted.
 - [x] Tests (11 passed), typecheck clean, browser checks: anonymous redirected, operator blocked from admin routes, partner dashboard reachable, public listings open, zero page errors.
-- [ ] End-to-end admin-path check blocked: no admin-role account exists in the database; /operator admin access verified by code review and tests only.
+- [x] End-to-end admin-path check complete (23 October 2026): admin role assigned to eliteaccess24@gmail.com (audited, idempotent), operator role to derrickforex4@gmail.com. Verified live: admin reaches /operator, /operator/bookings, /support, /partner; partner reaches /partner but is blocked at /operator and /support ("access restricted"); anonymous visits to /operator, /partner, /support redirect to /auth; /hotels stays public; tests (11 passed), typecheck clean, zero page errors.
 
 
 - [ ] Polish the existing public landing page with honest content and working feature links.
