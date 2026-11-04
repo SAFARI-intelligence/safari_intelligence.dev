@@ -14,6 +14,8 @@ import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as AuthRouteImport } from './routes/auth'
 import { Route as BookRouteImport } from './routes/book'
+import { Route as CityRouteImport } from './routes/city'
+import { Route as CoastRouteImport } from './routes/coast'
 import { Route as ExpansionRouteImport } from './routes/expansion'
 import { Route as HotelsRouteImport } from './routes/hotels'
 import { Route as IconsRouteImport } from './routes/icons'
@@ -77,6 +79,16 @@ const AuthRoute = AuthRouteImport.update({
 const BookRoute = BookRouteImport.update({
   id: '/book',
   path: '/book',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CityRoute = CityRouteImport.update({
+  id: '/city',
+  path: '/city',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CoastRoute = CoastRouteImport.update({
+  id: '/coast',
+  path: '/coast',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ExpansionRoute = ExpansionRouteImport.update({
@@ -288,6 +300,8 @@ export interface FileRoutesByFullPath {
   '/about': typeof AboutRoute
   '/auth': typeof AuthRoute
   '/book': typeof BookRoute
+  '/city': typeof CityRoute
+  '/coast': typeof CoastRoute
   '/expansion': typeof ExpansionRoute
   '/hotels': typeof HotelsRouteWithChildren
   '/icons': typeof IconsRoute
@@ -334,6 +348,8 @@ export interface FileRoutesByTo {
   '/about': typeof AboutRoute
   '/auth': typeof AuthRoute
   '/book': typeof BookRoute
+  '/city': typeof CityRoute
+  '/coast': typeof CoastRoute
   '/expansion': typeof ExpansionRoute
   '/hotels': typeof HotelsRouteWithChildren
   '/icons': typeof IconsRoute
@@ -380,6 +396,8 @@ export interface FileRoutesById {
   '/about': typeof AboutRoute
   '/auth': typeof AuthRoute
   '/book': typeof BookRoute
+  '/city': typeof CityRoute
+  '/coast': typeof CoastRoute
   '/expansion': typeof ExpansionRoute
   '/hotels': typeof HotelsRouteWithChildren
   '/icons': typeof IconsRoute
@@ -428,6 +446,8 @@ export interface FileRouteTypes {
     | '/about'
     | '/auth'
     | '/book'
+    | '/city'
+    | '/coast'
     | '/expansion'
     | '/hotels'
     | '/icons'
@@ -474,6 +494,8 @@ export interface FileRouteTypes {
     | '/about'
     | '/auth'
     | '/book'
+    | '/city'
+    | '/coast'
     | '/expansion'
     | '/hotels'
     | '/icons'
@@ -519,6 +541,8 @@ export interface FileRouteTypes {
     | '/about'
     | '/auth'
     | '/book'
+    | '/city'
+    | '/coast'
     | '/expansion'
     | '/hotels'
     | '/icons'
@@ -567,6 +591,8 @@ export interface RootRouteChildren {
   AboutRoute: typeof AboutRoute
   AuthRoute: typeof AuthRoute
   BookRoute: typeof BookRoute
+  CityRoute: typeof CityRoute
+  CoastRoute: typeof CoastRoute
   ExpansionRoute: typeof ExpansionRoute
   HotelsRoute: typeof HotelsRouteWithChildren
   IconsRoute: typeof IconsRoute
@@ -626,6 +652,20 @@ declare module '@tanstack/react-router' {
       path: '/book'
       fullPath: '/book'
       preLoaderRoute: typeof BookRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/city': {
+      id: '/city'
+      path: '/city'
+      fullPath: '/city'
+      preLoaderRoute: typeof CityRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/coast': {
+      id: '/coast'
+      path: '/coast'
+      fullPath: '/coast'
+      preLoaderRoute: typeof CoastRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/expansion': {
@@ -1007,6 +1047,8 @@ const rootRouteChildren: RootRouteChildren = {
   AboutRoute: AboutRoute,
   AuthRoute: AuthRoute,
   BookRoute: BookRoute,
+  CityRoute: CityRoute,
+  CoastRoute: CoastRoute,
   ExpansionRoute: ExpansionRoute,
   HotelsRoute: HotelsRouteWithChildren,
   IconsRoute: IconsRoute,
