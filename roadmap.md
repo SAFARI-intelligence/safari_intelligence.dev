@@ -1,4 +1,11 @@
-# SAFARI execution — 21 October 2026
+# SAFARI execution — 10 November 2026
+
+## Phase C public experience implementation
+
+- [ ] Complete the approved Wild / Coast / City discovery and navigation work without changing auth, payments, or backend behavior.
+- [ ] Remove unverified or prohibited public wildlife claims and preserve the two-hour safety restriction in copy; do not expose sensitive coordinates.
+- [ ] Validate all changed public pages, build status, responsive rendering, links, and runtime errors.
+- [ ] Record remaining blockers and verified outcomes before closing this work.
 
 ## Tri-role access control — 22 October 2026
 
